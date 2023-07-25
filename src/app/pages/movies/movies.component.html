@@ -1,1 +1,7 @@
-<p>movies works!</p>
+<h2>Trending TV Shows</h2>
+
+<ul>
+  <li *ngFor="let tvShow of trendingTvShows">
+    {{ tvShow.name }} ({{ tvShow.first_air_date }})
+  </li>
+</ul>
