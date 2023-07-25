@@ -11,6 +11,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { MoviesComponent } from './pages/movies/movies.component';
 import { FavoritesComponent } from './pages/favorites/favorites.component';
 import { TvSeriesComponent } from './pages/tv-series/tv-series.component';
+import { MenuComponent } from './components/menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TvSeriesComponent } from './pages/tv-series/tv-series.component';
     HomeComponent,
     MoviesComponent,
     FavoritesComponent,
-    TvSeriesComponent
+    TvSeriesComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
