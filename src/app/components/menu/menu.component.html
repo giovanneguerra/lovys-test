@@ -4,11 +4,14 @@
     </button> -->
     <img src="../../../assets/images/logo.svg" class="logo"/>
     <span class="example-spacer"></span>
-    <span>
+    <ng-container *ngIf="(authService.isUserLoggedIn() | async); else showLoginLink">
         <a routerLink="/home" class="page-link">Home</a>
         <a routerLink="/movies" class="page-link">Movies</a>
         <a routerLink="/favorites" class="page-link">Favorites</a>
         <a routerLink="/tv-series" class="page-link">Tv Series</a>
+        <a (click)="logout()" class="page-link">Logout</a>
+    </ng-container>
+    <ng-template #showLoginLink>
         <a routerLink="/login" class="page-link">Login</a>
-    </span>
+    </ng-template>
   </mat-toolbar>

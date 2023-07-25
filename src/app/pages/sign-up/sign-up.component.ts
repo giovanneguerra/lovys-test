@@ -3,24 +3,23 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.scss']
 })
-export class LoginComponent {
+export class SignUpComponent {
   email: string;
   password: string;
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  login() {
-    this.authService.login(this.email, this.password)
+  signup() {
+    this.authService.signUp(this.email, this.password)
       .then(() => {
         this.router.navigate(['/']);
       })
       .catch((error) => {
-        console.error('Login error:', error);
+        console.error('Signup error:', error);
       });
   }
-
 }
