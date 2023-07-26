@@ -1,1 +1,13 @@
-<h1>Welcome home!</h1>
+<h1>Trending movies</h1>
+<div *ngIf="trendingTvShows$ | async as trendingTvShows; else loading">
+    <h2>Trending TV Shows</h2>
+    <ul>
+      <li *ngFor="let show of trendingTvShows">
+        {{ show.name }}
+      </li>
+    </ul>
+  </div>
+  
+  <ng-template #loading>
+    <p>Loading...</p>
+  </ng-template>

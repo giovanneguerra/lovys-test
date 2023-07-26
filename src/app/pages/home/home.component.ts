@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { Observable } from 'rxjs';
+import { MediaService } from 'src/app/core/services/media.service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,10 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  constructor(public authService: AuthService) {}
+  trendingTvShows$: Observable<any[]>;
+
+  constructor(private mediaService: MediaService) {
+    this.trendingTvShows$ = this.mediaService.getTrendingTvShows()
+  }
 
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,7 @@ export class MediaService {
 
     return this.http.get<any>(url)
       .pipe(
+        map(data => data.results),
         catchError((error: any) => {
           console.error('API Error', error);
           return [];
