@@ -2,16 +2,4 @@ mat-toolbar {
     .logo {
         margin-right: 1rem;
     }
-    
-    .page-link {
-        color: white;
-        margin-right: 1rem;
-        
-        &:link, 
-        &:active, 
-        &:visited {
-            color: white;
-
-        }
-    }
 }

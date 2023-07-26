@@ -8,5 +8,21 @@
         letter-spacing: .2rem;
     }
     color: var(--secondary-color);
-    transition: letter-spacing .2s ;
+    transition: letter-spacing .2s;
+}
+
+.menu-link {
+    color: white;
+    margin-right: 1rem;
+    text-decoration: none;
+    
+    &:link, 
+    &:active, 
+    &:visited {
+        color: white;
+    }
+    &:hover {
+        color: var(--secondary-color);
+    }
+    transition: all .2s;
 }
