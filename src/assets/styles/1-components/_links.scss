@@ -1,0 +1,12 @@
+
+.page-link {
+    &:visited,
+    &:active {
+        color: var(--secondary-color);
+    } 
+    &:hover {
+        letter-spacing: .2rem;
+    }
+    color: var(--secondary-color);
+    transition: letter-spacing .2s ;
+}
