@@ -2,10 +2,33 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: calc(100svh - 64px);
   }
   
-  mat-card {
-    width: 300px;
+  .card {
+    width: 18rem;
+    padding: 2rem;
     text-align: center;
+    &__header {
+      flex-direction: column-reverse;
+      align-items: center;
+
+      h1 {
+        padding-top: 1rem;
+      }
+    }
+    &__content {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+    &__form {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  @media screen and (min-width: 400px) {
+    .card {
+      width: 24rem;
+    }
   }

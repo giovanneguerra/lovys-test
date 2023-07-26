@@ -2,6 +2,7 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
+@use '/src/assets/styles/lovys-theme.scss' as theme;
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -13,74 +14,8 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 
-$md-accent: (
-    50 : #ffebe7,
-    100 : #ffcec4,
-    200 : #ffae9c,
-    300 : #ff8d74,
-    400 : #ff7457,
-    500 : #ff5c39,
-    600 : #ff5433,
-    700 : #ff4a2c,
-    800 : #ff4124,
-    900 : #ff3017,
-    A100 : #ffffff,
-    A200 : #fffdfc,
-    A400 : #ffcec9,
-    A700 : #ffb7b0,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #000000,
-        500 : #000000,
-        600 : #000000,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
-);
-
-$md-primary: (
-    50 : #e6e0f1,
-    100 : #c0b3dc,
-    200 : #9780c5,
-    300 : #6d4dae,
-    400 : #4d269c,
-    500 : #2e008b,
-    600 : #290083,
-    700 : #230078,
-    800 : #1d006e,
-    900 : #12005b,
-    A100 : #988cff,
-    A200 : #6b59ff,
-    A400 : #3d26ff,
-    A700 : #270dff,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #ffffff,
-        400 : #ffffff,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #ffffff,
-        A400 : #ffffff,
-        A700 : #ffffff,
-    )
-);
-
-$lovys-test-primary: mat.define-palette($md-primary);
-$lovys-test-accent: mat.define-palette($md-accent);
+$lovys-test-primary: mat.define-palette(theme.$lovys-primary);
+$lovys-test-accent: mat.define-palette(theme.$lovys-accent);
 
 // The warn palette is optional (defaults to red).
 $lovys-test-warn: mat.define-palette(mat.$red-palette);
@@ -94,12 +29,16 @@ $lovys-test-theme: mat.define-light-theme((
     warn: $lovys-test-warn,
   )
 ));
+$my-typography: mat.define-typography-config(
+  $font-family: 'Montserrat'
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($lovys-test-theme);
+@include mat.typography-hierarchy($my-typography);
 
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Montserrat, "Helvetica Neue", sans-serif; }
