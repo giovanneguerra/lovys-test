@@ -7,7 +7,6 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  user = this.authService.getCurrentUser();
   constructor(public authService: AuthService) {}
 
 }

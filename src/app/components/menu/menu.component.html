@@ -4,7 +4,7 @@
     </button> -->
     <img src="../../../assets/images/logo.svg" class="logo"/>
     <span class="example-spacer"></span>
-    <ng-container *ngIf="(authService.isUserLoggedIn() | async); else showLoginLink">
+    <ng-container *ngIf="isLoggedIn; else showLoginLink">
         <a routerLink="/home" class="page-link">Home</a>
         <a routerLink="/movies" class="page-link">Movies</a>
         <a routerLink="/favorites" class="page-link">Favorites</a>

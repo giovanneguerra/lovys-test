@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { Observable, map, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +24,9 @@ export class AuthService {
     });
   }
 
-  getCurrentUser() {
-    return this.auth.user;
-  }
-
-  isUserLoggedIn() {
-    return this.auth.user;
+  isUserLoggedIn(): Observable<boolean> {
+    return this.auth.authState.pipe(
+      map(user => !!user),
+    );
   }
 }
