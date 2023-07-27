@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { MediaService } from 'src/app/core/services/media.service';
 
 @Component({
@@ -7,23 +8,14 @@ import { MediaService } from 'src/app/core/services/media.service';
   styleUrls: ['./movies.component.scss']
 })
 export class MoviesComponent {
-  trendingTvShows: any[];
+  movieGenre$: Observable<any[]>;
+  movieListByGenre$: Observable<any[]>;
+  movieDetail$: Observable<any[]>;
 
-  constructor(private mediaService: MediaService) {}
-
-  ngOnInit() {
-    this.loadTrendingTvShows();
-  }
-
-  loadTrendingTvShows() {
-    this.mediaService.getTrendingTvShows().subscribe(
-      (data: any) => {
-        this.trendingTvShows = data.results;
-      },
-      (error: any) => {
-        console.error('Error fetching data:', error);
-      }
-    );
+  constructor(private mediaService: MediaService) {
+    this.movieGenre$ = this.mediaService.getMovieGenres();
+    this.movieListByGenre$ = this.mediaService.getMovieListByGenre(27);
+    this.movieDetail$ = this.mediaService.getMovieDetail(892);
   }
 
 }

@@ -24,6 +24,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { environment } from './core/environments/environments';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthComponent } from './pages/auth/auth.component';
+import { GenrePipe } from './shared/pipes/genre.pipe';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { AuthComponent } from './pages/auth/auth.component';
     FavoritesComponent,
     TvSeriesComponent,
     MenuComponent,
-    AuthComponent
+    AuthComponent,
+    GenrePipe
   ],
   imports: [
     HttpClientModule,
