@@ -9,9 +9,14 @@ import { MediaService } from 'src/app/core/services/media.service';
 })
 export class HomeComponent {
   trendingTvShows$: Observable<any[]>;
+  topRatedMovies$: Observable<any[]>;
+  popularMovies$: Observable<any[]>;
+  
 
   constructor(private mediaService: MediaService) {
-    this.trendingTvShows$ = this.mediaService.getTrendingTvShows()
+    this.trendingTvShows$ = this.mediaService.getTrendingTvShows();
+    this.topRatedMovies$ = this.mediaService.getTopRatedMovies();
+    this.popularMovies$ = this.mediaService.getPopularMovies();
   }
 
 }
