@@ -1,5 +1,13 @@
 <h1>Movies</h1>
+<form [formGroup]="movieForm">
+  <mat-form-field appearance="fill" *ngIf="movieGenres$ | async as movieGenre;">
+    <mat-label>Select a movie genre</mat-label>
+    <mat-select formControlName="selectedGenre">
+      <mat-option *ngFor="let genre of movieGenre" [value]="genre.id">{{ genre.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
 
+</form>
 <div *ngIf="movieDetail$ | async as movieDetail; else loading">
   <h2>Movie detail</h2>
   <h3>{{ movieDetail.title }}</h3>
@@ -9,22 +17,12 @@
       </li>
     </ul>
 </div>
-<div *ngIf="movieGenre$ | async as movieGenre; else loading">
-  <h2>Movie Genre</h2>
+<div *ngIf="searchResults$ | async as movies">
+  <h3>Movies for selected genre:</h3>
   <ul>
-    <li *ngFor="let genre of movieGenre"> 
-      {{ genre.name }} {{ genre.id }}
+    <li *ngFor="let movie of movies">
+      {{ movie.title }}
     </li>
   </ul>
 </div>
-<div *ngIf="movieListByGenre$ | async as movieListByGenre; else loading">
-  <h2>Movie by Genre</h2>
-  <ul>
-    <li *ngFor="let genre of movieListByGenre">
-      {{ genre.title }} {{ genre | json }}
-    </li>
-  </ul>
-</div>
-<ng-template #loading>
-  <p>Loading...</p>
-</ng-template>
+<ng-template #loading><mat-spinner class="loader"></mat-spinner></ng-template>
