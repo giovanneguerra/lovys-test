@@ -8,19 +8,10 @@
   </mat-form-field>
 
 </form>
-<div *ngIf="movieDetail$ | async as movieDetail; else loading">
-  <h2>Movie detail</h2>
-  <h3>{{ movieDetail.title }}</h3>
-  <ul>
-      <li *ngFor="let genre of movieDetail.genres">
-        {{ genre.name }}
-      </li>
-    </ul>
-</div>
 <div *ngIf="searchResults$ | async as movies">
   <h3>Movies for selected genre:</h3>
   <ul>
-    <li *ngFor="let movie of movies">
+    <li *ngFor="let movie of movies" (click)="onMovieClick(movie.id)">
       {{ movie.title }}
     </li>
   </ul>

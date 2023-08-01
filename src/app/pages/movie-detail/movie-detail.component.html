@@ -1,0 +1,10 @@
+<ng-container *ngIf="movieDetail$ | async as movieDetail">
+    <h2>{{ movieDetail?.title }}</h2>
+    <p>{{ movieDetail?.overview }}</p>
+    <ul>
+        <li *ngFor="let genre of movieDetail.genres">
+          {{ genre.name }}
+        </li>
+    </ul>
+</ng-container>
+<a routerLink="/movies" class="page-link">Back to movie list</a>

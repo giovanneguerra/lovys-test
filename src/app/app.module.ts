@@ -26,6 +26,7 @@ import { environment } from './core/environments/environments';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthComponent } from './pages/auth/auth.component';
 import { GenrePipe } from './shared/pipes/genre.pipe';
+import { MovieDetailComponent } from './pages/movie-detail/movie-detail.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { GenrePipe } from './shared/pipes/genre.pipe';
     TvSeriesComponent,
     MenuComponent,
     AuthComponent,
-    GenrePipe
+    GenrePipe,
+    MovieDetailComponent
   ],
   imports: [
     HttpClientModule,
