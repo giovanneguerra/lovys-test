@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +26,7 @@ import { environment } from './core/environments/environments';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthComponent } from './pages/auth/auth.component';
 import { GenrePipe } from './shared/pipes/genre.pipe';
+import { MovieDetailComponent } from './pages/movie-detail/movie-detail.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { GenrePipe } from './shared/pipes/genre.pipe';
     TvSeriesComponent,
     MenuComponent,
     AuthComponent,
-    GenrePipe
+    GenrePipe,
+    MovieDetailComponent
   ],
   imports: [
     HttpClientModule,
@@ -53,7 +56,8 @@ import { GenrePipe } from './shared/pipes/genre.pipe';
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Genre } from 'src/app/shared/models/genre';
+import { Movie } from 'src/app/shared/models/movie';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class MediaService {
 
   constructor(private http: HttpClient) { }
 
-  getTrendingTvShows(): Observable<any> {
+  getTrendingTvShows(): Observable<Movie[]> {
     const url = `${this.apiUrl}trending/tv/day?api_key=${this.apiKey}`;
 
     return this.http.get<any>(url)
@@ -26,7 +27,7 @@ export class MediaService {
       );
   }
   
-  getMovieGenres(): Observable<any> {
+  getMovieGenres(): Observable<Genre[]> {
     const url = `${this.apiUrl}genre/movie/list?api_key=${this.apiKey}&language=en-US`;
     return this.http.get<any>(url)
       .pipe(
@@ -38,7 +39,7 @@ export class MediaService {
       );
 
   }
-  getPopularMovies(): Observable<any> {
+  getPopularMovies(): Observable<Movie[]> {
     const url = `${this.apiUrl}tv/popular?api_key=${this.apiKey}&language=en-US&page=1`;
     return this.http.get<any>(url)
       .pipe(
@@ -74,7 +75,7 @@ export class MediaService {
       );
   }
 
-  getMovieDetail(movieId: number): Observable<any> {
+  getMovieDetail(movieId: number): Observable<Movie> {
     const url = `${this.apiUrl}movie/${movieId}?api_key=${this.apiKey}&language=en-US`;
     return this.http.get<any>(url)
       .pipe(
