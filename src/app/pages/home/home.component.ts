@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { MediaService } from 'src/app/core/services/media.service';
 
 @Component({
-  selector: 'app-home',
+  selector: 'moma-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
