@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, shareReplay, tap } from 'rxjs/operators';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Genre } from 'src/app/shared/models/genre';
 import { Movie } from 'src/app/shared/models/movie';
+import { ActivatedRoute, Route } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,58 +14,46 @@ export class MediaService {
   private apiUrl = 'https://api.themoviedb.org/3/';
   private apiKey = '0f60ad592a39d4b497a0d8889bba1be2';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
-  getTrendingTvShows(): Observable<Movie[]> {
-    const url = `${this.apiUrl}trending/tv/day?api_key=${this.apiKey}`;
+  private trendingTvShows$ = this.http.get<any>(`${this.apiUrl}trending/tv/day?api_key=${this.apiKey}`)
+    .pipe(
+      map(data => data.results),
+      shareReplay(1),
+      catchError((error: any) => {
+        console.error('API Error', error);
+        return [];
+      })
+    );
 
-    return this.http.get<any>(url)
-      .pipe(
-        map(data => data.results),
-        catchError((error: any) => {
-          console.error('API Error', error);
-          return [];
-        })
-      );
-  }
+  private movieGenres$ = this.http.get<any>(`${this.apiUrl}genre/movie/list?api_key=${this.apiKey}&language=en-US`)
+    .pipe(
+      map(data => data.genres),
+      catchError((error: any) => {
+        console.error('API Error', error);
+        return [];
+      })
+    );
   
-  getMovieGenres(): Observable<Genre[]> {
-    const url = `${this.apiUrl}genre/movie/list?api_key=${this.apiKey}&language=en-US`;
-    return this.http.get<any>(url)
-      .pipe(
-        map(data => data.genres),
-        catchError((error: any) => {
-          console.error('API Error', error);
-          return [];
-        })
-      );
+  private popularMovies$ = this.http.get<any>(`${this.apiUrl}tv/popular?api_key=${this.apiKey}&language=en-US&page=1`)
+    .pipe(
+      map(data => data.results),
+      catchError((error: any) => {
+        console.error('API Error', error);
+        return [];
+      })
+    );
 
-  }
-  getPopularMovies(): Observable<Movie[]> {
-    const url = `${this.apiUrl}tv/popular?api_key=${this.apiKey}&language=en-US&page=1`;
-    return this.http.get<any>(url)
-      .pipe(
-        map(data => data.results),
-        catchError((error: any) => {
-          console.error('API Error', error);
-          return [];
-        })
-      );
-  }
+  private topRatedMovies$ = this.http.get<any>(`${this.apiUrl}tv/top_rated?api_key=${this.apiKey}&language=en-US&page=1`)
+    .pipe(
+      map(data => data.results),
+      catchError((error: any) => {
+        console.error('API Error', error);
+        return [];
+      })
+    );
 
-  getTopRatedMovies(): Observable<any> {
-    const url = `${this.apiUrl}tv/top_rated?api_key=${this.apiKey}&language=en-US&page=1`;
-    return this.http.get<any>(url)
-      .pipe(
-        map(data => data.results),
-        catchError((error: any) => {
-          console.error('API Error', error);
-          return [];
-        })
-      );
-  }
-
-  getMovieListByGenre(genre: Genre): Observable<any> {
+  getMovieListByGenre(genre: Genre): Observable<Movie[]> {
     const url = `${this.apiUrl}discover/movie?api_key=${this.apiKey}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre}`;
     return this.http.get<any>(url)
       .pipe(
@@ -85,4 +75,9 @@ export class MediaService {
         })
       );
   }
+
+  trendingTvShows = toSignal<Movie[]>(this.trendingTvShows$);
+  movieGenres = toSignal<Genre[]>(this.movieGenres$);
+  popularMovies = toSignal<Movie[]>(this.popularMovies$);
+  topRatedMovies = toSignal<Movie[]>(this.topRatedMovies$);
 }

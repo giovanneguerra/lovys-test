@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MediaService } from 'src/app/core/services/media.service';
+import { Movie } from 'src/app/shared/models/movie';
 
 @Component({
   selector: 'moma-home',
@@ -8,15 +9,10 @@ import { MediaService } from 'src/app/core/services/media.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  trendingTvShows$: Observable<any[]>;
-  topRatedMovies$: Observable<any[]>;
-  popularMovies$: Observable<any[]>;
+  trendingTvShows = this.mediaService.trendingTvShows;
+  topRatedMovies = this.mediaService.topRatedMovies;
+  popularMovies = this.mediaService.popularMovies;
   
-
-  constructor(private mediaService: MediaService) {
-    this.trendingTvShows$ = this.mediaService.getTrendingTvShows();
-    this.topRatedMovies$ = this.mediaService.getTopRatedMovies();
-    this.popularMovies$ = this.mediaService.getPopularMovies();
-  }
+  constructor(private mediaService: MediaService) {}
 
 }

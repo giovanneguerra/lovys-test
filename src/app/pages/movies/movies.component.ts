@@ -12,7 +12,7 @@ import { Movie } from 'src/app/shared/models/movie';
   styleUrls: ['./movies.component.scss']
 })
 export class MoviesComponent implements OnInit{
-  movieGenres$: Observable<Genre[]>;
+  movieGenres = this.mediaService.movieGenres;
   movieDetail$: Observable<Movie>;
   selectedGenre: number;
   movieForm: FormGroup;
@@ -25,7 +25,6 @@ export class MoviesComponent implements OnInit{
   ) {}
 
   ngOnInit() {
-    this.movieGenres$ = this.mediaService.getMovieGenres();
     this.initForm();
 
     this.searchResults$ = this.movieForm.get('selectedGenre').valueChanges.pipe(
