@@ -2,12 +2,12 @@
 .page-link {
     &:visited,
     &:active {
-        color: var(--secondary-color);
+        color: var(--accent-color);
     } 
     &:hover {
         letter-spacing: .2rem;
     }
-    color: var(--secondary-color);
+    color: var(--accent-color);
     transition: letter-spacing .2s;
 }
 
@@ -22,7 +22,7 @@
         color: white;
     }
     &:hover {
-        color: var(--secondary-color);
+        color: var(--accent-color);
     }
     transition: all .2s;
 }

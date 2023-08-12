@@ -5,7 +5,7 @@ import { MediaService } from 'src/app/core/services/media.service';
 import { Movie } from 'src/app/shared/models/movie';
 
 @Component({
-  selector: 'app-movie-detail',
+  selector: 'moma-movie-detail',
   templateUrl: './movie-detail.component.html',
   styleUrls: ['./movie-detail.component.scss']
 })

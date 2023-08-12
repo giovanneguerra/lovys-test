@@ -7,7 +7,7 @@ import { Genre } from 'src/app/shared/models/genre';
 import { Movie } from 'src/app/shared/models/movie';
 
 @Component({
-  selector: 'app-movies',
+  selector: 'moma-movies',
   templateUrl: './movies.component.html',
   styleUrls: ['./movies.component.scss']
 })
