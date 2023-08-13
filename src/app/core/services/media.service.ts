@@ -63,7 +63,7 @@ export class MediaService {
       );
   }
 
-  getMovieListByGenre(genre: Genre): Observable<any> {
+  getMovieListByGenre(genre: Genre): Observable<Genre> {
     const url = `${this.apiUrl}discover/movie?api_key=${this.apiKey}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre}`;
     return this.http.get<any>(url)
       .pipe(
