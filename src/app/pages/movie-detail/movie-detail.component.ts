@@ -20,7 +20,7 @@ export class MovieDetailComponent implements OnInit{
   ngOnInit(): void {
     this.movieDetail$ = this.route.paramMap.pipe(
      switchMap(params => {
-      const movieId = +params.get('id');
+      const movieId = Number(params.get('id'));
       return this.mediaService.getMovieDetail(movieId).pipe(
         catchError((error: any) => {
           console.error('Error fetching movie detail:', error);

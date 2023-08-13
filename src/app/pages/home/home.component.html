@@ -1,6 +1,6 @@
 
 
-<div *ngIf="trendingTvShows$ | async as trendingTvShows; else loading">
+<div *ngIf="trendingTvShows() as trendingTvShows; else loading">
     <h2>Trending TV Shows</h2>
     <ul>
       <li *ngFor="let show of trendingTvShows">
@@ -8,7 +8,7 @@
       </li>
     </ul>
 </div>
-<div *ngIf="topRatedMovies$ | async as topRatedMovies; else loading">
+<div *ngIf="topRatedMovies() as topRatedMovies; else loading">
     <h2>Top Movies</h2>
     <ul>
       <li *ngFor="let topMovies of topRatedMovies">
@@ -16,7 +16,7 @@
       </li>
     </ul>
 </div>
-<div *ngIf="popularMovies$ | async as popularMovies; else loading">
+<div *ngIf="popularMovies() as popularMovies; else loading">
     <h2>Popular Movies</h2>
     <ul>
       <li *ngFor="let popMovies of popularMovies">

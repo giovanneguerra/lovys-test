@@ -1,6 +1,6 @@
 <h1>Movies</h1>
 <form [formGroup]="movieForm">
-  <mat-form-field appearance="fill" *ngIf="movieGenres$ | async as movieGenre;">
+  <mat-form-field appearance="fill" *ngIf="movieGenres() as movieGenre;">
     <mat-label>Select a movie genre</mat-label>
     <mat-select formControlName="selectedGenre">
       <mat-option *ngFor="let genre of movieGenre" [value]="genre.id">{{ genre.name }}</mat-option>
