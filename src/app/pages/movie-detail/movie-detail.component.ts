@@ -31,4 +31,8 @@ export class MovieDetailComponent implements OnInit{
     );
   }
 
+  displayImage(imagePath: string): string {
+    return `https://image.tmdb.org/t/p/w500${imagePath}`;
+  }
+
 }
