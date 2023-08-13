@@ -16,7 +16,7 @@ export class SignGuard {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> {
       return this.authService.isUserLoggedIn().pipe(
         take(1),
         map(loggedIn => {

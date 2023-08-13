@@ -1,20 +1,20 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { catchError, map, shareReplay, tap } from 'rxjs/operators';
+import { catchError, map, shareReplay } from 'rxjs/operators';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Genre } from 'src/app/shared/models/genre';
 import { Movie } from 'src/app/shared/models/movie';
-import { ActivatedRoute, Route } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MediaService {
+  route = inject(ActivatedRoute);
+  http = inject(HttpClient);
   private apiUrl = 'https://api.themoviedb.org/3/';
   private apiKey = '0f60ad592a39d4b497a0d8889bba1be2';
-
-  constructor(private http: HttpClient, private route: ActivatedRoute) {}
 
   private trendingTvShows$ = this.http.get<any>(`${this.apiUrl}trending/tv/day?api_key=${this.apiKey}`)
     .pipe(

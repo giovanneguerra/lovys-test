@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, catchError, of, switchMap, tap } from 'rxjs';
 import { MediaService } from 'src/app/core/services/media.service';
@@ -10,12 +10,9 @@ import { Movie } from 'src/app/shared/models/movie';
   styleUrls: ['./movie-detail.component.scss']
 })
 export class MovieDetailComponent implements OnInit{
+  route = inject(ActivatedRoute);
+  mediaService = inject(MediaService);
   movieDetail$: Observable<Movie>;
-
-  constructor(
-    private route: ActivatedRoute,
-    private mediaService: MediaService
-  ) {}
 
   ngOnInit(): void {
     this.movieDetail$ = this.route.paramMap.pipe(

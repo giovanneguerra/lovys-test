@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subject, catchError, finalize, map, tap } from 'rxjs';
+import { Observable, Subject, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  auth = inject(AngularFireAuth);
+  router = inject(Router);
+  formBuilder = inject(FormBuilder);
   isLoading$ = new Subject<boolean>();
-  constructor(private auth: AngularFireAuth,
-     private router: Router,
-     private formBuilder: FormBuilder) {}
 
   initForm(): FormGroup {
     return this.formBuilder.group({
