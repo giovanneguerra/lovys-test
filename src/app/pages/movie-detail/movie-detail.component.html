@@ -1,4 +1,8 @@
 <ng-container *ngIf="movieDetail$ | async as movieDetail">
+  <img *ngIf="movieDetail.poster_path" 
+    [src]="displayImage(movieDetail.poster_path)"
+    [alt]="movieDetail.title" 
+    srcset="" />
     <h2>{{ movieDetail?.title }}</h2>
     <p>{{ movieDetail?.overview }}</p>
     <ul>
