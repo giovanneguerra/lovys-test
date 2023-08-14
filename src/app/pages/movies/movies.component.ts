@@ -1,8 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, EnvironmentInjector, OnInit, Signal, effect, inject, runInInjectionContext } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, startWith, switchMap } from 'rxjs';
+import { Observable, map, startWith, switchMap, tap } from 'rxjs';
 import { MediaService } from 'src/app/core/services/media.service';
+import { Genre } from 'src/app/shared/models/genre';
 import { Movie } from 'src/app/shared/models/movie';
 
 @Component({
@@ -11,24 +13,35 @@ import { Movie } from 'src/app/shared/models/movie';
   styleUrls: ['./movies.component.scss']
 })
 export class MoviesComponent implements OnInit{
+  formBuilder = inject(FormBuilder);
   router = inject(Router);
   mediaService = inject(MediaService);
-  formBuilder = inject(FormBuilder);
+  injector  = inject(EnvironmentInjector);
   
   movieGenres = this.mediaService.movieGenres;
   selectedGenre: number;
   movieForm: FormGroup;
-  searchResults$: Observable<Movie[]>;
+  searchResults$: Observable<Genre>;
+  searchResults: Signal<Genre>;
+  movieListByGenre: Signal<Movie[]>;
 
   ngOnInit() {
     this.initForm();
-
+    
     this.searchResults$ = this.movieForm.get('selectedGenre').valueChanges.pipe(
-      startWith(null),
-      switchMap(selectedGenre => {
-        return selectedGenre ? this.mediaService.getMovieListByGenre(selectedGenre) : [];
+      tap(val => this.mediaService.setSelectedGenreId(val))
+    );
+    runInInjectionContext(this.injector, () => {
+      this.searchResults = toSignal<Genre>(this.searchResults$);
+      this.movieListByGenre = this.mediaService.movieListByGenre;
+
+      effect(() => {
+        this.movieForm.get('selectedGenre').valueChanges.pipe(
+          tap(val => console.log(val))
+        )
       })
-    ); 
+    });
+
   }
 
   private initForm() {

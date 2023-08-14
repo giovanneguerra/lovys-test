@@ -2,35 +2,41 @@
 <form [formGroup]="movieForm">
   <mat-form-field appearance="fill" *ngIf="movieGenres() as movieGenre;">
     <mat-label>Select a movie genre</mat-label>
-    <mat-select formControlName="selectedGenre">
+    <mat-select formControlName="selectedGenre" color="accent">
       <mat-option *ngFor="let genre of movieGenre" [value]="genre.id">{{ genre.name }}</mat-option>
     </mat-select>
   </mat-form-field>
 
 </form>
-<div *ngIf="searchResults$ | async as movies;">
-  <h3>Movies for selected genre:</h3>
-  <div class="movieList">
-      <div class="movieList__container">
-        <mat-card class="movieList__card" *ngFor="let movie of movies">
-        <mat-card-header>
-          <mat-card-title> [matTooltip]="displayTooltip(movie.title)"{{ movie.title }}</mat-card-title>
-          <mat-card-subtitle>
-            <p *ngFor="let genre of movie.genres">
-              {{ genre.name }}
+<ng-container *ngIf="movieListByGenre() as movies; else loading;">
+  <moma-movies-list title="Trending TV Shows" ></moma-movies-list>
+  <div *ngIf="movies.length > 0">
+    <h3>Movies for selected genre:</h3>
+    <div class="movieList">
+        <div class="movieList__container">
+          <mat-card 
+            *ngFor="let movie of movies"
+            class="movieList__card" 
+            (click)="onMovieClick(movie.id)" >
+          <mat-card-header>
+            <mat-card-title [matTooltip]="displayTooltip(movie.title)">{{ movie.title | trimText: 16 }}</mat-card-title>
+            <mat-card-subtitle>
+              <p *ngFor="let genre of movie.genres">
+                {{ genre.name }}
+              </p>
+            </mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image 
+            [src]="displayImage(movie.poster_path)"
+            [alt]="movie.name">
+          <mat-card-content>
+            <p>
+              {{ movie.overview | noDescription | trimText: 100 }}
             </p>
-          </mat-card-subtitle>
-        </mat-card-header>
-        <img mat-card-image 
-          [src]="displayImage(movie.poster_path)"
-          [alt]="movie.name">
-        <mat-card-content>
-          <p>
-            {{ movie.overview | noDescription | trimText: 100 }}
-          </p>
-        </mat-card-content>
-      </mat-card>
-      </div>
+          </mat-card-content>
+        </mat-card>
+        </div>
+    </div>
   </div>
-</div>
+</ng-container>
 <ng-template #loading><mat-spinner class="loader"></mat-spinner></ng-template>
