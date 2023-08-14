@@ -12,4 +12,12 @@ export class HomeComponent {
   trendingTvShows = this.mediaService.trendingTvShows;
   topRatedMovies = this.mediaService.topRatedMovies;
   popularMovies = this.mediaService.popularMovies;
+
+  displayImage(imagePath: string): string {
+    return this.mediaService.convertToImagePath(imagePath);
+  }
+
+  displayTooltip(title: string): string | undefined {
+    return title.length > 16 ? title : undefined;
+  }
 }

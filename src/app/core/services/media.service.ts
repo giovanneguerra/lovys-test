@@ -18,7 +18,7 @@ export class MediaService {
 
   private trendingTvShows$ = this.http.get<any>(`${this.apiUrl}trending/tv/day?api_key=${this.apiKey}`)
     .pipe(
-      map(data => data.results),
+      map(data => data.results.slice(0,5)),
       shareReplay(1),
       catchError((error: any) => {
         console.error('API Error', error);
@@ -29,6 +29,7 @@ export class MediaService {
   private movieGenres$ = this.http.get<any>(`${this.apiUrl}genre/movie/list?api_key=${this.apiKey}&language=en-US`)
     .pipe(
       map(data => data.genres),
+      shareReplay(1),
       catchError((error: any) => {
         console.error('API Error', error);
         return [];
@@ -37,7 +38,8 @@ export class MediaService {
   
   private popularMovies$ = this.http.get<any>(`${this.apiUrl}tv/popular?api_key=${this.apiKey}&language=en-US&page=1`)
     .pipe(
-      map(data => data.results),
+      map(data => data.results.slice(0,5)),
+      shareReplay(1),
       catchError((error: any) => {
         console.error('API Error', error);
         return [];
@@ -46,18 +48,24 @@ export class MediaService {
 
   private topRatedMovies$ = this.http.get<any>(`${this.apiUrl}tv/top_rated?api_key=${this.apiKey}&language=en-US&page=1`)
     .pipe(
-      map(data => data.results),
+      map(data => data.results.slice(0,5)),
+      shareReplay(1),
       catchError((error: any) => {
         console.error('API Error', error);
         return [];
       })
     );
 
+  convertToImagePath(imagePath: string): string {
+    return `https://image.tmdb.org/t/p/w500${imagePath}`;
+  }
+
   getMovieListByGenre(genre: Genre): Observable<Movie[]> {
     const url = `${this.apiUrl}discover/movie?api_key=${this.apiKey}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre}`;
     return this.http.get<any>(url)
       .pipe(
-        map(data => data.results),
+        map(data => data.results.slice(0,10)),
+        shareReplay(1),
         catchError((error: any) => {
           console.error('API Error', error);
           return [];

@@ -41,4 +41,12 @@ export class MoviesComponent implements OnInit{
     this.router.navigate(['/movie-detail', movieId]);
   }
 
+  displayImage(imagePath: string): string {
+    return this.mediaService.convertToImagePath(imagePath);
+  }
+
+  displayTooltip(title: string): string | undefined {
+    return title.length > 16 ? title : undefined;
+  }
+
 }
