@@ -1,4 +1,4 @@
-<ng-container *ngIf="movieDetail$ | async as movieDetail">
+<ng-container *ngIf="movieDetail() as movieDetail; else loading;">
   <img *ngIf="movieDetail.poster_path" 
     [src]="displayImage(movieDetail.poster_path)"
     [alt]="movieDetail.title" 
@@ -12,3 +12,6 @@
     </ul>
 </ng-container>
 <a routerLink="/movies" class="page-link">Back to movie list</a>
+<ng-template #loading>
+  <mat-spinner class="loader"></mat-spinner>
+</ng-template>
