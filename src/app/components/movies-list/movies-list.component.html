@@ -1,0 +1,29 @@
+<ng-container *ngIf="moviesList() as movies; else loading;">
+    <div class="movieList">
+        <h1>{{ title }}</h1>
+        <div class="movieList__container">
+            <mat-card class="movieList__card" *ngFor="let movie of movies">
+                <mat-card-header>
+                <mat-card-title [matTooltip]="displayTooltip(movie.name)">{{ movie.name }}</mat-card-title>
+                <mat-card-subtitle>
+                    <p *ngFor="let genre of movie.genres">
+                    {{ genre.name }}
+                    </p>
+                </mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image 
+                class="movieList__list"
+                [src]="displayImage(movie.poster_path)"
+                [alt]="movie.name">
+                <mat-card-content>
+                <p>
+                    {{ movie.overview | noDescription | trimText: 100 }}
+                </p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</ng-container>
+  <ng-template #loading>
+    <mat-spinner class="loader"></mat-spinner>
+  </ng-template>
