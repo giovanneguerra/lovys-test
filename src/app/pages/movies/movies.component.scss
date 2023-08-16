@@ -1,5 +1,8 @@
+.container {
+    margin: 2rem;
+}
+
 .movieList {
-    padding: 2rem;
     &__container {
         display: flex;
         flex-wrap: wrap; 
