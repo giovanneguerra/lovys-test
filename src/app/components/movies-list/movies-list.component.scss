@@ -1,20 +1,8 @@
 .movieList {
     padding: 2rem;
+    
     &__container {
         display: flex;
-        width: 100%;
-    }
-    &__card {
-        width: 18%;
-        margin: 0.8rem;
-        mat-card-header {
-            height: 2.5rem;
-            mat-card-title {
-                font-size: 1.2rem;
-            }
-        }
-    }
-    &__list {
-        margin-bottom: 1rem;
+        width: 100px;
     }
 }

@@ -31,6 +31,7 @@ import { MovieDetailComponent } from './pages/movie-detail/movie-detail.componen
 import { MoviesListComponent } from './components/movies-list/movies-list.component';
 import { TrimTextPipe } from './shared/pipes/trim-text.pipe';
 import { NoDescriptionPipe } from './shared/pipes/no-description.pipe';
+import { MovieCardComponent } from './components/movie-card/movie-card.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { NoDescriptionPipe } from './shared/pipes/no-description.pipe';
     MovieDetailComponent,
     MoviesListComponent,
     TrimTextPipe,
-    NoDescriptionPipe
+    NoDescriptionPipe,
+    MovieCardComponent
   ],
   imports: [
     HttpClientModule,
