@@ -22,13 +22,14 @@ export class MoviesComponent implements OnInit{
   movieForm: FormGroup;
   searchResults: Signal<Genre>;
   movieListByGenre = this.mediaService.movieListByGenre;
+  selectedGenreId: Genre;
 
   ngOnInit() {
     this.initForm();
     runInInjectionContext(this.injector, () => {
       this.searchResults = toSignal<Genre>(this.movieForm.get('selectedGenre').valueChanges.pipe(
         tap(genreId => {
-          this.mediaService.setSelectedGenreId(genreId)
+          this.mediaService.setSelectedGenreId(genreId);
         })
       ));
     });

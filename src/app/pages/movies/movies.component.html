@@ -12,7 +12,6 @@
   </form>
   <ng-container *ngIf="movieListByGenre() as movies; else loading;">
     <div *ngIf="movies.length > 0">
-      <h3>Movies in {{ selectedGenreId | genre }} category</h3>
       <div class="movieList">
           <div class="movieList__container">
             <moma-movie-card
