@@ -83,13 +83,16 @@ export class MediaService {
 
   private movieDetail$ = toObservable(this.movieId).pipe(
     switchMap(movieId => {
-      const url = `${this.apiUrl}movie/${movieId}?api_key=${this.apiKey}&language=en-US`;    
-      return this.http.get<any>(url).pipe(
-        shareReplay(1),
-        catchError((error: any) => {
-          console.error('API Error', error);
-          return [];
-        }));
+      if(movieId) {
+        const url = `${this.apiUrl}movie/${movieId}?api_key=${this.apiKey}&language=en-US`;    
+        return this.http.get<any>(url).pipe(
+          shareReplay(1),
+          catchError((error: any) => {
+            console.error('API Error', error);
+            return [];
+          }));
+      }
+      return [] as Movie[];
     })
   )
 
