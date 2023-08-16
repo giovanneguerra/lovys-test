@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, catchError, of, switchMap, tap } from 'rxjs';
 import { MediaService } from 'src/app/core/services/media.service';
-import { Movie } from 'src/app/shared/models/movie';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'moma-movie-detail',
@@ -10,29 +9,17 @@ import { Movie } from 'src/app/shared/models/movie';
   styleUrls: ['./movie-detail.component.scss']
 })
 export class MovieDetailComponent implements OnInit{
-  movieDetail$: Observable<Movie>;
-
-  constructor(
-    private route: ActivatedRoute,
-    private mediaService: MediaService
-  ) {}
+  route = inject(ActivatedRoute);
+  mediaService = inject(MediaService);
+  params = toSignal(this.route.paramMap);
+  movieDetail = this.mediaService.movieDetail;
 
   ngOnInit(): void {
-    this.movieDetail$ = this.route.paramMap.pipe(
-     switchMap(params => {
-      const movieId = Number(params.get('id'));
-      return this.mediaService.getMovieDetail(movieId).pipe(
-        catchError((error: any) => {
-          console.error('Error fetching movie detail:', error);
-          return of(null);
-        })
-      );
-     })
-    );
+    this.mediaService.setMovieDetail(Number(this.params().get('id')));
   }
 
   displayImage(imagePath: string): string {
-    return `https://image.tmdb.org/t/p/w500${imagePath}`;
+    return this.mediaService.convertToImagePath(imagePath);
   }
 
 }

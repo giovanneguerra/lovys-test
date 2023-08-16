@@ -1,19 +1,44 @@
-<h1>Movies</h1>
-<form [formGroup]="movieForm">
-  <mat-form-field appearance="fill" *ngIf="movieGenres() as movieGenre;">
-    <mat-label>Select a movie genre</mat-label>
-    <mat-select formControlName="selectedGenre">
-      <mat-option *ngFor="let genre of movieGenre" [value]="genre.id">{{ genre.name }}</mat-option>
-    </mat-select>
-  </mat-form-field>
 
-</form>
-<div *ngIf="searchResults$ | async as movies">
-  <h3>Movies for selected genre:</h3>
-  <ul>
-    <li *ngFor="let movie of movies" (click)="onMovieClick(movie.id)">
-      {{ movie.title }}
-    </li>
-  </ul>
+<div class="container">
+  <h1>Movies</h1>
+  <form [formGroup]="movieForm">
+    <mat-form-field appearance="fill" *ngIf="movieGenres() as movieGenre;">
+      <mat-label>Select a movie genre</mat-label>
+      <mat-select formControlName="selectedGenre" color="accent">
+        <mat-option *ngFor="let genre of movieGenre" [value]="genre.id">{{ genre.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+  </form>
+  <ng-container *ngIf="movieListByGenre() as movies; else loading;">
+    <div *ngIf="movies.length > 0">
+      <h3>Movies in {{ selectedGenreId | genre }} category</h3>
+      <div class="movieList">
+          <div class="movieList__container">
+            <mat-card 
+              *ngFor="let movie of movies"
+              class="movieList__card" 
+              (click)="onMovieClick(movie.id)" >
+            <mat-card-header>
+              <mat-card-title [matTooltip]="displayTooltip(movie.title)">{{ movie.title | trimText: 16 }}</mat-card-title>
+              <mat-card-subtitle>
+                <p *ngFor="let genre of movie.genres">
+                  {{ genre.name }}
+                </p>
+              </mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image 
+              [src]="displayImage(movie.poster_path)"
+              [alt]="movie.name">
+            <mat-card-content>
+              <p>
+                {{ movie.overview | noDescription | trimText: 100 }}
+              </p>
+            </mat-card-content>
+          </mat-card>
+          </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #loading><mat-spinner class="loader"></mat-spinner></ng-template>  
 </div>
-<ng-template #loading><mat-spinner class="loader"></mat-spinner></ng-template>

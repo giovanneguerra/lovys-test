@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -7,9 +7,8 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit{
+  authService = inject(AuthService);
   isLoggedIn = false;
-
-  constructor(public authService: AuthService) {}
 
   ngOnInit(): void {
     this.authService.isUserLoggedIn().subscribe(loggedIn => {

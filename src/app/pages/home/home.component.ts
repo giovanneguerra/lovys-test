@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, inject } from '@angular/core';
 import { MediaService } from 'src/app/core/services/media.service';
-import { Movie } from 'src/app/shared/models/movie';
 
 @Component({
   selector: 'moma-home',
@@ -9,10 +7,17 @@ import { Movie } from 'src/app/shared/models/movie';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+  mediaService = inject(MediaService);
+  
   trendingTvShows = this.mediaService.trendingTvShows;
   topRatedMovies = this.mediaService.topRatedMovies;
   popularMovies = this.mediaService.popularMovies;
-  
-  constructor(private mediaService: MediaService) {}
 
+  displayImage(imagePath: string): string {
+    return this.mediaService.convertToImagePath(imagePath);
+  }
+
+  displayTooltip(title: string): string | undefined {
+    return title.length > 16 ? title : undefined;
+  }
 }

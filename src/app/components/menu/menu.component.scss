@@ -1,4 +1,7 @@
 mat-toolbar {
+    &.toolbar {
+        background: var(--dark-color);
+    }
     .logo {
         margin-right: 1rem;
     }

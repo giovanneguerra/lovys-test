@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -10,18 +10,16 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit, OnDestroy{
+  authService = inject(AuthService);
+  formBuilder = inject(FormBuilder);
+  route = inject(ActivatedRoute);
   isSignup = false;
   isLoading = false;
   authForm: FormGroup;
   private loadingSubscription: Subscription;
 
-  constructor(private authService: AuthService,
-    private formBuilder: FormBuilder,
-    private route: ActivatedRoute) {
-    this.authForm = this.authService.initForm();
-  }
-
   ngOnInit() {
+    this.authForm = this.authService.initForm();
     this.loadingSubscription = this.authService.isLoading$.subscribe(isLoading => {
       this.isLoading = isLoading;
     });

@@ -1,29 +1,3 @@
-
-
-<div *ngIf="trendingTvShows() as trendingTvShows; else loading">
-    <h2>Trending TV Shows</h2>
-    <ul>
-      <li *ngFor="let show of trendingTvShows">
-        {{ show.name }}
-      </li>
-    </ul>
-</div>
-<div *ngIf="topRatedMovies() as topRatedMovies; else loading">
-    <h2>Top Movies</h2>
-    <ul>
-      <li *ngFor="let topMovies of topRatedMovies">
-        {{ topMovies.name }}
-      </li>
-    </ul>
-</div>
-<div *ngIf="popularMovies() as popularMovies; else loading">
-    <h2>Popular Movies</h2>
-    <ul>
-      <li *ngFor="let popMovies of popularMovies">
-        {{ popMovies.name }}
-      </li>
-    </ul>
-</div>
-  <ng-template #loading>
-    <p>Loading...</p>
-  </ng-template>
+<moma-movies-list title="Trending TV Shows" [moviesList]="trendingTvShows"></moma-movies-list>
+<moma-movies-list title="Top Movies" [moviesList]="topRatedMovies"></moma-movies-list>
+<moma-movies-list title="Popular Movies" [moviesList]="popularMovies"></moma-movies-list>
