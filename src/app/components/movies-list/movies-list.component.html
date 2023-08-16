@@ -4,7 +4,7 @@
         <div class="movieList__container">
             <mat-card class="movieList__card" *ngFor="let movie of movies">
                 <mat-card-header>
-                <mat-card-title [matTooltip]="displayTooltip(movie.name)">{{ movie.name }}</mat-card-title>
+                <mat-card-title [matTooltip]="displayTooltip(movie.name)">{{ movie.name  | trimText: 16 }}</mat-card-title>
                 <mat-card-subtitle>
                     <p *ngFor="let genre of movie.genres">
                     {{ genre.name }}
