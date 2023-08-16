@@ -15,6 +15,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,6 +32,7 @@ import { MovieDetailComponent } from './pages/movie-detail/movie-detail.componen
 import { MoviesListComponent } from './components/movies-list/movies-list.component';
 import { TrimTextPipe } from './shared/pipes/trim-text.pipe';
 import { NoDescriptionPipe } from './shared/pipes/no-description.pipe';
+import { MovieCardComponent } from './components/movie-card/movie-card.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { NoDescriptionPipe } from './shared/pipes/no-description.pipe';
     MovieDetailComponent,
     MoviesListComponent,
     TrimTextPipe,
-    NoDescriptionPipe
+    NoDescriptionPipe,
+    MovieCardComponent
   ],
   imports: [
     HttpClientModule,
@@ -65,7 +68,8 @@ import { NoDescriptionPipe } from './shared/pipes/no-description.pipe';
     MatProgressSpinnerModule,
     MatMenuModule,
     MatSelectModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
