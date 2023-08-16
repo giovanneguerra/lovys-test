@@ -27,6 +27,16 @@ export class MediaService {
       })
     );
 
+  private tvGenres$ = this.http.get<any>(`${this.apiUrl}genre/tv/list?api_key=${this.apiKey}&language=en-US`)
+    .pipe(
+      map(data => data.genres),
+      shareReplay(1),
+      catchError((error: any) => {
+        console.error('API Error', error);
+        return [];
+      })
+    );
+
   private trendingTvShows$ = this.http.get<any>(`${this.apiUrl}trending/tv/day?api_key=${this.apiKey}`)
     .pipe(
       map(data => data.results.slice(0,5)),
@@ -97,6 +107,7 @@ export class MediaService {
     
   trendingTvShows = toSignal<Movie[]>(this.trendingTvShows$);
   movieGenres = toSignal<Genre[]>(this.movieGenres$);
+  tvGenres = toSignal<Genre[]>(this.tvGenres$);
   popularMovies = toSignal<Movie[]>(this.popularMovies$);
   topRatedMovies = toSignal<Movie[]>(this.topRatedMovies$);
   movieListByGenre = toSignal<Movie[]>(this.movieListByGenre$);

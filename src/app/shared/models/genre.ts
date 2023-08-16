@@ -1,6 +1,7 @@
 export enum Genre {
     Action = 28,
     Adventure = 12,
+    ActionAdventure = 10759,
     Animation = 16,
     Comedy = 35,
     Crime = 80,
@@ -10,12 +11,19 @@ export enum Genre {
     Fantasy = 14,
     History = 36,
     Horror = 27,
+    Kids = 10762,
     Music = 10402,
     Mystery = 9648,
+    News = 10763,
+    Reality = 10764,
     Romance = 10749,
     ScienceFiction = 878,
-    TVMovie = 10770,
+    SciFiFantasy = 10765,
+    Soap = 10766,
+    Talk = 10768,
     Thriller = 53,
+    TVMovie = 10770,
     War = 10752,
+    WarPolitics = 10768,
     Western = 37
 }
