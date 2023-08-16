@@ -1,6 +1,6 @@
 .movieCard {
     width: 15rem;
-    min-height: 35rem;
+    min-height: 38rem;
     margin: .5rem;
     mat-card-header {
         height: 2.5rem;
@@ -13,5 +13,9 @@
     }
     &__image {
         margin-bottom: 1rem;
+    }
+    mat-chip {
+        background: var(--accent-color);
+        font-size: 12px;
     }
 }

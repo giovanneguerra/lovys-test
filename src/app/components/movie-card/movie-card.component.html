@@ -3,17 +3,17 @@
     <mat-card-title 
         [ngClass]="{'trimmed': movie.name.length > 16}"
         [matTooltip]="displayTooltip(movie.name)">{{ movie.name  | trimText: 16 }}</mat-card-title>
-    <mat-card-subtitle>
-        <p *ngFor="let genre of movie.genre_ids">
-        {{ genre.name }}
-        </p>
-    </mat-card-subtitle>
     </mat-card-header>
     <img mat-card-image 
     class="movieCard__image"
     [src]="displayImage(movie.poster_path)"
     [alt]="movie.name">
     <mat-card-content>
+    <mat-chip-listbox aria-label="Genres">
+        <mat-chip 
+            disableRipple="true" 
+            *ngFor="let genre of movie.genre_ids | slice:0:2">{{ genre | genre }}</mat-chip>
+    </mat-chip-listbox>
     <p>
         {{ movie.overview | noDescription | trimText: 100 }}
     </p>
