@@ -1,0 +1,17 @@
+.movieCard {
+    width: 15rem;
+    min-height: 35rem;
+    margin: .5rem;
+    mat-card-header {
+        height: 2.5rem;
+        mat-card-title {
+            font-size: 1.2rem;
+            &.trimmed {
+                cursor: help;
+            }
+        }
+    }
+    &__image {
+        margin-bottom: 1rem;
+    }
+}
