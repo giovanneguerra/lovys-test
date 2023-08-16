@@ -2,7 +2,11 @@
 <div *ngIf="moviesList() as movies; else loading;" class="movieList">
     <h1>{{ title }}</h1>
     <div class="movieList__container">
-        <moma-movie-card *ngFor="let movie of movies" [movie]="movie"></moma-movie-card>
+        <moma-movie-card *ngFor="let movie of movies" [movie]="movie">
+            <mat-card-title 
+                [ngClass]="{'trimmed': movie.name.length > 16}"
+                [matTooltip]="displayTooltip(movie.name)">{{ movie.name  | trimText: 16 }}</mat-card-title>
+        </moma-movie-card>
     </div>
 </div>
   <ng-template #loading>

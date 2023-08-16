@@ -15,27 +15,13 @@
       <h3>Movies in {{ selectedGenreId | genre }} category</h3>
       <div class="movieList">
           <div class="movieList__container">
-            <mat-card 
-              *ngFor="let movie of movies"
-              class="movieList__card" 
-              (click)="onMovieClick(movie.id)" >
-            <mat-card-header>
-              <mat-card-title [matTooltip]="displayTooltip(movie.title)">{{ movie.title | trimText: 16 }}</mat-card-title>
-              <mat-card-subtitle>
-                <p *ngFor="let genre of movie.genres">
-                  {{ genre.name }}
-                </p>
-              </mat-card-subtitle>
-            </mat-card-header>
-            <img mat-card-image 
-              [src]="displayImage(movie.poster_path)"
-              [alt]="movie.name">
-            <mat-card-content>
-              <p>
-                {{ movie.overview | noDescription | trimText: 100 }}
-              </p>
-            </mat-card-content>
-          </mat-card>
+            <moma-movie-card
+              *ngFor="let movie of movies" [movie]="movie"
+              (click)="onMovieClick(movie.id)">
+              <mat-card-title 
+                [ngClass]="{'trimmed': movie.title.length > 16}"
+                [matTooltip]="displayTooltip(movie.title)">{{ movie.title  | trimText: 16 }}</mat-card-title>
+            </moma-movie-card>
           </div>
       </div>
     </div>

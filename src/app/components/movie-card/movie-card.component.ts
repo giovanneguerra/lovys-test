@@ -14,8 +14,4 @@ export class MovieCardComponent {
   displayImage(imagePath: string): string {
     return this.mediaService.convertToImagePath(imagePath);
   }
-
-  displayTooltip(title: string): string | undefined {
-    return title.length > 16 ? title : undefined;
-  }
 }

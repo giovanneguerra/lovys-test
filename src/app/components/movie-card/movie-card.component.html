@@ -1,8 +1,6 @@
 <mat-card class="movieCard">
     <mat-card-header>
-    <mat-card-title 
-        [ngClass]="{'trimmed': movie.name.length > 16}"
-        [matTooltip]="displayTooltip(movie.name)">{{ movie.name  | trimText: 16 }}</mat-card-title>
+        <ng-content></ng-content>
     </mat-card-header>
     <img mat-card-image 
     class="movieCard__image"

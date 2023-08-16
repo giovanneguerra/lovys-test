@@ -9,4 +9,8 @@ import { Movie } from 'src/app/shared/models/movie';
 export class MoviesListComponent {
   @Input() title: string;
   @Input() moviesList: Signal<Movie[]>;
+
+  displayTooltip(title: string): string | undefined {
+    return title.length > 16 ? title : undefined;
+  }
 }
