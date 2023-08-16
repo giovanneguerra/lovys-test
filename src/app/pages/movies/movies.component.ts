@@ -19,34 +19,25 @@ export class MoviesComponent implements OnInit{
   injector  = inject(EnvironmentInjector);
   
   movieGenres = this.mediaService.movieGenres;
-  selectedGenre: number;
   movieForm: FormGroup;
-  searchResults$: Observable<Genre>;
   searchResults: Signal<Genre>;
-  movieListByGenre: Signal<Movie[]>;
+  movieListByGenre = this.mediaService.movieListByGenre;
 
   ngOnInit() {
     this.initForm();
-    
-    this.searchResults$ = this.movieForm.get('selectedGenre').valueChanges.pipe(
-      tap(val => this.mediaService.setSelectedGenreId(val))
-    );
     runInInjectionContext(this.injector, () => {
-      this.searchResults = toSignal<Genre>(this.searchResults$);
-      this.movieListByGenre = this.mediaService.movieListByGenre;
-
-      effect(() => {
-        this.movieForm.get('selectedGenre').valueChanges.pipe(
-          tap(val => console.log(val))
-        )
-      })
+      this.searchResults = toSignal<Genre>(this.movieForm.get('selectedGenre').valueChanges.pipe(
+        tap(genreId => {
+          this.mediaService.setSelectedGenreId(genreId)
+        })
+      ));
     });
 
   }
 
   private initForm() {
     this.movieForm = this.formBuilder.group({
-      selectedGenre: [null]
+      selectedGenre: [this.mediaService.selectedGenreId()]
     });
   }
 
