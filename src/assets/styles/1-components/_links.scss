@@ -1,28 +1,28 @@
-
 .page-link {
-    &:visited,
-    &:active {
-        color: var(--primary-color);
-    } 
-    &:hover {
-        letter-spacing: .1rem;
-    }
+  &:visited,
+  &:active {
     color: var(--primary-color);
-    transition: letter-spacing .2s;
+  }
+  &:hover {
+    cursor: pointer;
+    letter-spacing: 0.1rem;
+  }
+  color: var(--primary-color);
+  transition: letter-spacing 0.2s;
 }
 
 .menu-link {
+  color: white;
+  margin-right: 1rem;
+  text-decoration: none;
+
+  &:link,
+  &:active,
+  &:visited {
     color: white;
-    margin-right: 1rem;
-    text-decoration: none;
-    
-    &:link, 
-    &:active, 
-    &:visited {
-        color: white;
-    }
-    &:hover {
-        color: var(--primary-color);
-    }
-    transition: all .2s;
+  }
+  &:hover {
+    color: var(--primary-color);
+  }
+  transition: all 0.2s;
 }
