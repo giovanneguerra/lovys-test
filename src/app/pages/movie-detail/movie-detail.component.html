@@ -1,17 +1,19 @@
-<ng-container *ngIf="movieDetail() as movieDetail; else loading;">
-  <img *ngIf="movieDetail.poster_path" 
+<ng-container *ngIf="movieDetail() as movieDetail; else loading">
+  <img
+    *ngIf="movieDetail.poster_path"
     [src]="displayImage(movieDetail.poster_path)"
-    [alt]="movieDetail.title" 
-    srcset="" />
-    <h2>{{ movieDetail?.title }}</h2>
-    <p>{{ movieDetail?.overview }}</p>
-    <ul>
-        <li *ngFor="let genre of movieDetail.genres">
-          {{ genre.name }}
-        </li>
-    </ul>
+    [alt]="movieDetail.title"
+    srcset=""
+  />
+  <h2>{{ movieDetail?.title }}</h2>
+  <p>{{ movieDetail?.overview }}</p>
+  <ul>
+    <li *ngFor="let genre of movieDetail.genres">
+      {{ genre.name }}
+    </li>
+  </ul>
 </ng-container>
-<a routerLink="/movies" class="page-link">Back to movie list</a>
+<a class="page-link" (click)="goBack()">Go back to list</a>
 <ng-template #loading>
   <mat-spinner class="loader"></mat-spinner>
 </ng-template>
