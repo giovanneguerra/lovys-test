@@ -1,8 +1,10 @@
 .movieList {
-    padding: 2rem;
-    
-    &__container {
-        display: flex;
-        width: 100px;
-    }
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  &__container {
+    display: flex;
+    width: 100px;
+  }
 }
