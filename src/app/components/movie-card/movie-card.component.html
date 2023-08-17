@@ -1,19 +1,23 @@
-<mat-card class="movieCard">
-    <mat-card-header>
-        <ng-content></ng-content>
-    </mat-card-header>
-    <img mat-card-image 
+<mat-card class="movieCard" (click)="onMovieClick(movie.id)">
+  <mat-card-header>
+    <ng-content></ng-content>
+  </mat-card-header>
+  <img
+    mat-card-image
     class="movieCard__image"
     [src]="displayImage(movie.poster_path)"
-    [alt]="movie.name">
-    <mat-card-content>
+    [alt]="movie.name"
+  />
+  <mat-card-content>
     <mat-chip-listbox aria-label="Genres">
-        <mat-chip 
-            disableRipple="true" 
-            *ngFor="let genre of movie.genre_ids | slice:0:2">{{ genre | genre }}</mat-chip>
+      <mat-chip
+        disableRipple="true"
+        *ngFor="let genre of movie.genre_ids | slice : 0 : 2"
+        >{{ genre | genre }}</mat-chip
+      >
     </mat-chip-listbox>
     <p>
-        {{ movie.overview | noDescription | trimText: 100 }}
+      {{ movie.overview | noDescription | trimText : 100 }}
     </p>
-    </mat-card-content>
+  </mat-card-content>
 </mat-card>
