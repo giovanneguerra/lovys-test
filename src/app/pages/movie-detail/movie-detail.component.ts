@@ -1,8 +1,11 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MediaService } from 'src/app/core/services/media.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Location } from '@angular/common';
+import { Crew } from 'src/app/shared/models/crew';
+import { Cast } from 'src/app/shared/models/cast';
+import { Credits } from 'src/app/shared/models/credits';
 
 @Component({
   selector: 'moma-movie-detail',
@@ -15,9 +18,23 @@ export class MovieDetailComponent implements OnInit {
   mediaService = inject(MediaService);
   params = toSignal(this.route.paramMap);
   movieDetail = this.mediaService.movieDetail;
+  movieCredits = this.mediaService.movieCredits;
 
   ngOnInit(): void {
-    this.mediaService.setMovieDetail(Number(this.params().get('id')));
+    this.mediaService.setMovieId(Number(this.params().get('id')));
+  }
+
+  getMovieCredits(movieCredits: Credits, role?: string): Cast[] | Crew[] | [] {
+    if (movieCredits) {
+      if (role) {
+        return movieCredits.crew
+          .filter((crew) => crew.job === role)
+          .slice(0, 3);
+      }
+
+      return movieCredits.cast.slice(0, 3);
+    }
+    return [];
   }
 
   displayImage(imagePath: string): string {
