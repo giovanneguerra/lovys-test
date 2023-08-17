@@ -1,27 +1,23 @@
 .movieCard {
-    cursor: pointer;
-    width: 15rem;
-    min-height: 38rem;
-    margin: .5rem;
-    transition: all 0.3s ease-in-out;
-    &:hover {
-        transform: translateY(-1rem);
-        box-shadow: 0px 12px 20px 8px var(--grey-color);
+  cursor: pointer;
+  width: 15rem;
+  min-height: 38rem;
+  margin: 0.5rem;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    transform: translateY(-1rem);
+    box-shadow: 0px 12px 20px 8px var(--grey-color);
+  }
+  mat-card-header {
+    height: 2.5rem;
+    mat-card-title {
+      font-size: 1.2rem;
+      &.trimmed {
+        cursor: help;
+      }
     }
-    mat-card-header {
-        height: 2.5rem;
-        mat-card-title {
-            font-size: 1.2rem;
-            &.trimmed {
-                cursor: help;
-            }
-        }
-    }
-    &__image {
-        margin-bottom: 1rem;
-    }
-    mat-chip {
-        background: var(--accent-color);
-        font-size: 12px;
-    }
+  }
+  &__image {
+    margin-bottom: 1rem;
+  }
 }

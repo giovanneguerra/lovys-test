@@ -11,10 +11,12 @@
   <mat-card-content>
     <mat-chip-listbox aria-label="Genres">
       <mat-chip
+        class="genreChip"
         disableRipple="true"
         *ngFor="let genre of movie.genre_ids | slice : 0 : 2"
-        >{{ genre | genre }}</mat-chip
       >
+        {{ genre | genre }}
+      </mat-chip>
     </mat-chip-listbox>
     <p>
       {{ movie.overview | noDescription | trimText : 100 }}

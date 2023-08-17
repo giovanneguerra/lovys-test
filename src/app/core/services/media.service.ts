@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
-import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
+import { catchError, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Genre } from 'src/app/shared/models/genre';
 import { Movie } from 'src/app/shared/models/movie';
 import { ActivatedRoute } from '@angular/router';
+import { Credits } from 'src/app/shared/models/credits';
 
 @Injectable({
   providedIn: 'root',
@@ -121,11 +122,28 @@ export class MediaService {
     })
   );
 
+  private movieCredits$ = toObservable(this.movieId).pipe(
+    switchMap((movieId) => {
+      if (movieId) {
+        const url = `${this.apiUrl}movie/${movieId}/credits?api_key=${this.apiKey}&language=en-US`;
+        return this.http.get<any>(url).pipe(
+          tap((val) => console.log(val.cast)),
+          shareReplay(1),
+          catchError((error: any) => {
+            console.error('API Error', error);
+            return [];
+          })
+        );
+      }
+      return [];
+    })
+  );
+
   setSelectedGenreId(genreId: Genre) {
     this.selectedGenreId.set(genreId);
   }
 
-  setMovieDetail(movieId: number) {
+  setMovieId(movieId: number) {
     this.movieId.set(movieId);
   }
 
@@ -141,4 +159,5 @@ export class MediaService {
   topRatedMovies = toSignal<Movie[]>(this.topRatedMovies$);
   movieListByGenre = toSignal<Movie[]>(this.movieListByGenre$);
   movieDetail = toSignal<Movie>(this.movieDetail$);
+  movieCredits = toSignal<Credits>(this.movieCredits$);
 }

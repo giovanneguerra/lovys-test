@@ -1,19 +1,52 @@
-<ng-container *ngIf="movieDetail() as movieDetail; else loading">
+<div class="movieDetail" *ngIf="movieDetail() as movieDetail; else loading">
   <img
     *ngIf="movieDetail.poster_path"
     [src]="displayImage(movieDetail.poster_path)"
     [alt]="movieDetail.title"
-    srcset=""
+    class="movieDetail__image"
   />
-  <h2>{{ movieDetail?.title }}</h2>
-  <p>{{ movieDetail?.overview }}</p>
-  <ul>
-    <li *ngFor="let genre of movieDetail.genres">
-      {{ genre.name }}
-    </li>
-  </ul>
-</ng-container>
-<a class="page-link" (click)="goBack()">Go back to list</a>
+  <div class="movieDetail__content">
+    <h1>{{ movieDetail?.title }}</h1>
+    <p>{{ movieDetail?.overview }}</p>
+    <mat-chip-listbox aria-label="Genres">
+      <mat-chip
+        class="genreChip"
+        disableRipple="true"
+        *ngFor="let genre of movieDetail.genres"
+      >
+        {{ genre.name }}
+      </mat-chip>
+    </mat-chip-listbox>
+    <div class="info">
+      <p
+        class="info__row"
+        *ngIf="getMovieCredits(movieCredits(), 'Director').length > 0"
+      >
+        <b>Directors: </b
+        ><span
+          *ngFor="let director of getMovieCredits(movieCredits(), 'Director')"
+          >{{ director.name }}
+        </span>
+      </p>
+      <p
+        class="info__row"
+        *ngIf="getMovieCredits(movieCredits(), 'Writer').length > 0"
+      >
+        <b>Writers: </b
+        ><span *ngFor="let writer of getMovieCredits(movieCredits(), 'Writer')"
+          >{{ writer.name }}
+        </span>
+      </p>
+      <p class="info__row" *ngIf="getMovieCredits(movieCredits()).length > 0">
+        <b>Stars: </b
+        ><span *ngFor="let star of getMovieCredits(movieCredits())"
+          >{{ star.name }}
+        </span>
+      </p>
+    </div>
+    <a class="page-link" (click)="goBack()">Go back to the list</a>
+  </div>
+</div>
 <ng-template #loading>
   <mat-spinner class="loader"></mat-spinner>
 </ng-template>

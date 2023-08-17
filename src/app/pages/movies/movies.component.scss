@@ -1,30 +1,26 @@
-.container {
-    margin: 2rem;
-}
-
 .movieList {
-    &__container {
-        display: flex;
-        flex-wrap: wrap; 
-        width: 100%;
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  &__card {
+    cursor: pointer;
+    width: 18%;
+    margin: 0.8rem;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      transform: translateY(-1rem);
+      box-shadow: 0px 12px 20px 8px var(--grey-color);
     }
-    &__card {
-        cursor: pointer;
-        width: 18%;
-        margin: 0.8rem;
-        transition: all 0.3s ease-in-out;
-        &:hover {
-            transform: translateY(-1rem);
-            box-shadow: 0px 12px 20px 8px var(--grey-color);
-        }
-        mat-card-header {
-            height: 2.5rem;
-            mat-card-title {
-                font-size: 1.2rem;
-            }
-        }
+    mat-card-header {
+      height: 2.5rem;
+      mat-card-title {
+        font-size: 1.2rem;
+      }
     }
-    &__list {
-        margin-bottom: 1rem;
-    }
+  }
+  &__list {
+    margin-bottom: 1rem;
+  }
 }
