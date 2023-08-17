@@ -1,0 +1,8 @@
+.genreChip {
+  &.mat-mdc-standard-chip {
+    background: var(--primary-color) !important;
+    --mdc-chip-label-text-color: #fff;
+  }
+  font-size: 12px;
+  font-weight: 600;
+}
