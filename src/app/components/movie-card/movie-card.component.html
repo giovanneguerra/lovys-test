@@ -1,6 +1,10 @@
 <mat-card class="movieCard" (click)="onMovieClick(movie.id)">
   <mat-card-header>
-    <ng-content></ng-content>
+    <mat-card-title
+      [ngClass]="{ trimmed: movie.title.length > 16 }"
+      [matTooltip]="displayTooltip(movie.title)"
+      >{{ movie.title | trimText : 16 }}</mat-card-title
+    >
   </mat-card-header>
   <img
     mat-card-image
@@ -16,6 +20,13 @@
         *ngFor="let genre of movie.genre_ids | slice : 0 : 2"
       >
         {{ genre | genre }}
+      </mat-chip>
+      <mat-chip
+        class="genreChip"
+        disableRipple="true"
+        *ngFor="let genre of movie.genres | slice : 0 : 2"
+      >
+        {{ genre.name }}
       </mat-chip>
     </mat-chip-listbox>
     <p>

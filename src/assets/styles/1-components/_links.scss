@@ -55,3 +55,20 @@
   }
   transition: all 0.2s;
 }
+
+.auth-link {
+  position: relative;
+  text-decoration: underline;
+  color: var(--dark-color);
+  transition: letter-spacing 0.3s ease-in-out;
+
+  &:visited,
+  &:active {
+    color: var(--dark-color);
+  }
+
+  &:hover {
+    color: var(--primary-color);
+    letter-spacing: 0.1rem;
+  }
+}

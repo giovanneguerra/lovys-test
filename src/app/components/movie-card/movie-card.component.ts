@@ -20,4 +20,8 @@ export class MovieCardComponent {
   onMovieClick(movieId: number) {
     this.router.navigate(['/movie-detail', movieId]);
   }
+
+  displayTooltip(title: string): string | undefined {
+    return title.length > 16 ? title : undefined;
+  }
 }

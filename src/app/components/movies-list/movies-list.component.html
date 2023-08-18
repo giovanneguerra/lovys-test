@@ -2,11 +2,6 @@
   <h2>{{ title }}</h2>
   <div class="movieList__container">
     <moma-movie-card *ngFor="let movie of movies" [movie]="movie">
-      <mat-card-title
-        [ngClass]="{ trimmed: movie.title.length > 16 }"
-        [matTooltip]="displayTooltip(movie.title)"
-        >{{ movie.title | trimText : 16 }}</mat-card-title
-      >
     </moma-movie-card>
   </div>
 </div>
