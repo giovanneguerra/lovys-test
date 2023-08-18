@@ -1,21 +1,46 @@
 <div class="auth-container">
-    <mat-card class="card">
-      <mat-card-header class="card__header">
-        <img mat-card-sm-image src="/assets/images/logo_alt.svg" alt="logo">
-        <mat-card-title><h1>{{ isSignup ? 'Register' : 'Login' }}</h1></mat-card-title>
-      </mat-card-header>
-      <ng-container *ngIf="isLoading"><mat-spinner class="loader"></mat-spinner></ng-container>
-      <mat-card-content class="card__content">
-        <form (ngSubmit)="onSubmit()" [formGroup]="authForm" class="card__form">
-          <mat-form-field>
-            <input matInput placeholder="Email" type="email" formControlName="email" required>
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Password" type="password" formControlName="password" required>
-          </mat-form-field>
-          <button mat-raised-button color="primary" [disabled]="isLoading" type="submit">Sign {{ isSignup ? 'Up' : 'In' }}</button>
-        </form>
-      </mat-card-content>
-      <a [routerLink]="isSignup ? '/login' : '/sign-up'" class="page-link">{{ isSignup ? 'Back to login' : 'Sign up' }}</a>
-    </mat-card>
-  </div>
+  <mat-card class="card">
+    <mat-card-header class="card__header">
+      <img mat-card-sm-image src="/assets/images/logo_alt.svg" alt="logo" />
+      <mat-card-title
+        ><h1>{{ isSignup ? "Register" : "Login" }}</h1></mat-card-title
+      >
+    </mat-card-header>
+    <ng-container *ngIf="isLoading"
+      ><mat-spinner class="loader"></mat-spinner
+    ></ng-container>
+    <mat-card-content class="card__content">
+      <form (ngSubmit)="onSubmit()" [formGroup]="authForm" class="card__form">
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Email"
+            type="email"
+            formControlName="email"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Password"
+            type="password"
+            formControlName="password"
+            required
+          />
+        </mat-form-field>
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="isLoading"
+          type="submit"
+        >
+          Sign {{ isSignup ? "Up" : "In" }}
+        </button>
+      </form>
+    </mat-card-content>
+    <a [routerLink]="isSignup ? '/login' : '/sign-up'" class="auth-link">{{
+      isSignup ? "Back to login" : "Sign up"
+    }}</a>
+  </mat-card>
+</div>
