@@ -127,7 +127,6 @@ export class MediaService {
       if (movieId) {
         const url = `${this.apiUrl}movie/${movieId}/credits?api_key=${this.apiKey}&language=en-US`;
         return this.http.get<any>(url).pipe(
-          tap((val) => console.log(val.cast)),
           shareReplay(1),
           catchError((error: any) => {
             console.error('API Error', error);
