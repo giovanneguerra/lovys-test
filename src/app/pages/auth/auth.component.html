@@ -6,7 +6,7 @@
         ><h1>{{ isSignup ? "Register" : "Login" }}</h1></mat-card-title
       >
     </mat-card-header>
-    <ng-container *ngIf="isLoading"
+    <ng-container *ngIf="isLoading()"
       ><mat-spinner class="loader"></mat-spinner
     ></ng-container>
     <mat-card-content class="card__content">
@@ -32,7 +32,7 @@
         <button
           mat-raised-button
           color="primary"
-          [disabled]="isLoading"
+          [disabled]="isLoading()"
           type="submit"
         >
           Sign {{ isSignup ? "Up" : "In" }}

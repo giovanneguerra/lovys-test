@@ -10,9 +10,9 @@ import { MoviesListComponent } from '../../components/movies-list/movies-list.co
   imports: [MoviesListComponent],
 })
 export class HomeComponent {
-  MovieService = inject(MovieService);
+  movieService = inject(MovieService);
 
-  upComingMovies = this.MovieService.upComingMovies;
-  topRatedMovies = this.MovieService.topRatedMovies;
-  popularMovies = this.MovieService.popularMovies;
+  upComingMovies = this.movieService.upComingMovies;
+  topRatedMovies = this.movieService.topRatedMovies;
+  popularMovies = this.movieService.popularMovies;
 }

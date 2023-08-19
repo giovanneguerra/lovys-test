@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -23,8 +23,8 @@ export class AuthService {
   db = inject(AngularFirestore);
   router = inject(Router);
   formBuilder = inject(FormBuilder);
-  isLoading$ = new Subject<boolean>();
   http = inject(HttpClient);
+  loading = signal(false);
   private apiUrl = 'https://api.themoviedb.org/3/';
   private apiKey = '0f60ad592a39d4b497a0d8889bba1be2';
 
@@ -73,7 +73,7 @@ export class AuthService {
   }
 
   onSubmit(isSignup: boolean, authForm: FormGroup) {
-    this.isLoading$.next(true);
+    this.loading.set(true);
 
     const email = authForm.value.email;
     const password = authForm.value.password;
@@ -83,7 +83,7 @@ export class AuthService {
         .createUserWithEmailAndPassword(email, password)
         .then(() => {
           this.router.navigate(['/']);
-          this.isLoading$.next(false);
+          this.loading.set(false);
         })
         .catch((error) => {
           console.error('Login error:', error);
@@ -94,7 +94,7 @@ export class AuthService {
         .signInWithEmailAndPassword(email, password)
         .then(() => {
           this.router.navigate(['/']);
-          this.isLoading$.next(false);
+          this.loading.set(false);
         })
         .catch((error) => {
           console.error('Register error:', error);
