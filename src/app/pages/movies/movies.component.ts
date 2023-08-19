@@ -1,11 +1,17 @@
-import { Component, EnvironmentInjector, OnInit, Signal, effect, inject, runInInjectionContext } from '@angular/core';
+import {
+  Component,
+  EnvironmentInjector,
+  OnInit,
+  Signal,
+  inject,
+  runInInjectionContext,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, map, startWith, switchMap, tap } from 'rxjs';
-import { MediaService } from 'src/app/core/services/media.service';
+import { tap } from 'rxjs';
+import { MovieService } from 'src/app/core/services/movie.service';
 import { Genre } from 'src/app/shared/models/genre';
-import { Movie } from 'src/app/shared/models/movie';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MovieCardComponent } from '../../components/movie-card/movie-card.component';
 import { MatOptionModule } from '@angular/material/core';
@@ -14,39 +20,49 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-    selector: 'moma-movies',
-    templateUrl: './movies.component.html',
-    styleUrls: ['./movies.component.scss'],
-    standalone: true,
-    imports: [ReactiveFormsModule, NgIf, MatFormFieldModule, MatSelectModule, NgFor, MatOptionModule, MovieCardComponent, MatProgressSpinnerModule]
+  selector: 'moma-movies',
+  templateUrl: './movies.component.html',
+  styleUrls: ['./movies.component.scss'],
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    NgIf,
+    MatFormFieldModule,
+    MatSelectModule,
+    NgFor,
+    MatOptionModule,
+    MovieCardComponent,
+    MatProgressSpinnerModule,
+  ],
 })
-export class MoviesComponent implements OnInit{
+export class MoviesComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   router = inject(Router);
-  mediaService = inject(MediaService);
-  injector  = inject(EnvironmentInjector);
-  
-  movieGenres = this.mediaService.movieGenres;
+  MovieService = inject(MovieService);
+  injector = inject(EnvironmentInjector);
+
+  movieGenres = this.MovieService.movieGenres;
   movieForm: FormGroup;
   searchResults: Signal<Genre>;
-  movieListByGenre = this.mediaService.movieListByGenre;
+  movieListByGenre = this.MovieService.movieListByGenre;
   selectedGenreId: Genre;
 
   ngOnInit() {
     this.initForm();
     runInInjectionContext(this.injector, () => {
-      this.searchResults = toSignal<Genre>(this.movieForm.get('selectedGenre').valueChanges.pipe(
-        tap(genreId => {
-          this.mediaService.setSelectedGenreId(genreId);
-        })
-      ));
+      this.searchResults = toSignal<Genre>(
+        this.movieForm.get('selectedGenre').valueChanges.pipe(
+          tap((genreId) => {
+            this.MovieService.setSelectedGenreId(genreId);
+          })
+        )
+      );
     });
-
   }
 
   private initForm() {
     this.movieForm = this.formBuilder.group({
-      selectedGenre: [this.mediaService.selectedGenreId()]
+      selectedGenre: [this.MovieService.selectedGenreId()],
     });
   }
 
@@ -55,11 +71,10 @@ export class MoviesComponent implements OnInit{
   }
 
   displayImage(imagePath: string): string {
-    return this.mediaService.convertToImagePath(imagePath);
+    return this.MovieService.convertToImagePath(imagePath);
   }
 
   displayTooltip(title: string): string | undefined {
     return title.length > 16 ? title : undefined;
   }
-
 }

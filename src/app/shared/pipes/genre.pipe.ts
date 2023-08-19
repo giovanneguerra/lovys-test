@@ -1,44 +1,53 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Genre } from '../models/genre';
 
-
 @Pipe({
-    name: 'genre',
-    standalone: true
+  name: 'genre',
+  standalone: true,
 })
 export class GenrePipe implements PipeTransform {
-
   transform(genreNumber: number): string {
     switch (genreNumber) {
-      case Genre.Action: return 'Action';
-      case Genre.ActionAdventure: return 'Action & Adventure';
-      case Genre.Adventure: return 'Adventure';
-      case Genre.Animation: return 'Animation';
-      case Genre.Comedy: return 'Comedy';
-      case Genre.Crime: return 'Crime';
-      case Genre.Documentary: return 'Documentary';
-      case Genre.Drama: return 'Drama';
-      case Genre.Family: return 'Family';
-      case Genre.Fantasy: return 'Fantasy';
-      case Genre.History: return 'History';
-      case Genre.Horror: return 'Horror';
-      case Genre.Kids: return 'Kids';
-      case Genre.Music: return 'Music';
-      case Genre.Mystery: return 'Mystery';
-      case Genre.News: return 'News';
-      case Genre.Reality: return 'Reality';
-      case Genre.Romance: return 'Romance';
-      case Genre.ScienceFiction: return 'Science Fiction';
-      case Genre.SciFiFantasy: return 'SciFi & Fantasy';
-      case Genre.Soap: return 'Soap Opera';
-      case Genre.Talk: return 'Talk';
-      case Genre.Thriller: return 'Thriller';
-      case Genre.TVMovie: return 'TV Movie';
-      case Genre.War: return 'War';
-      case Genre.WarPolitics: return 'War & Politics';
-      case Genre.Western: return 'Western';
-      default: return '';
+      case Genre.Action:
+        return 'Action';
+      case Genre.Adventure:
+        return 'Adventure';
+      case Genre.Animation:
+        return 'Animation';
+      case Genre.Comedy:
+        return 'Comedy';
+      case Genre.Crime:
+        return 'Crime';
+      case Genre.Documentary:
+        return 'Documentary';
+      case Genre.Drama:
+        return 'Drama';
+      case Genre.Family:
+        return 'Family';
+      case Genre.Fantasy:
+        return 'Fantasy';
+      case Genre.History:
+        return 'History';
+      case Genre.Horror:
+        return 'Horror';
+      case Genre.Music:
+        return 'Music';
+      case Genre.Mystery:
+        return 'Mystery';
+      case Genre.Romance:
+        return 'Romance';
+      case Genre.ScienceFiction:
+        return 'Science Fiction';
+      case Genre.Thriller:
+        return 'Thriller';
+      case Genre.TVMovie:
+        return 'TV Movie';
+      case Genre.War:
+        return 'War';
+      case Genre.Western:
+        return 'Western';
+      default:
+        return '';
     }
   }
-
 }
