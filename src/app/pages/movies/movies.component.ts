@@ -38,13 +38,13 @@ import { NgIf, NgFor } from '@angular/common';
 export class MoviesComponent implements OnInit {
   formBuilder = inject(FormBuilder);
   router = inject(Router);
-  MovieService = inject(MovieService);
+  movieService = inject(MovieService);
   injector = inject(EnvironmentInjector);
 
-  movieGenres = this.MovieService.movieGenres;
+  movieGenres = this.movieService.movieGenres;
   movieForm: FormGroup;
   searchResults: Signal<Genre>;
-  movieListByGenre = this.MovieService.movieListByGenre;
+  movieListByGenre = this.movieService.movieListByGenre;
   selectedGenreId: Genre;
 
   ngOnInit() {
@@ -53,7 +53,7 @@ export class MoviesComponent implements OnInit {
       this.searchResults = toSignal<Genre>(
         this.movieForm.get('selectedGenre').valueChanges.pipe(
           tap((genreId) => {
-            this.MovieService.setSelectedGenreId(genreId);
+            this.movieService.setSelectedGenreId(genreId);
           })
         )
       );
@@ -62,7 +62,7 @@ export class MoviesComponent implements OnInit {
 
   private initForm() {
     this.movieForm = this.formBuilder.group({
-      selectedGenre: [this.MovieService.selectedGenreId()],
+      selectedGenre: [this.movieService.selectedGenreId()],
     });
   }
 
@@ -71,7 +71,7 @@ export class MoviesComponent implements OnInit {
   }
 
   displayImage(imagePath: string): string {
-    return this.MovieService.convertToImagePath(imagePath);
+    return this.movieService.convertToImagePath(imagePath);
   }
 
   displayTooltip(title: string): string | undefined {

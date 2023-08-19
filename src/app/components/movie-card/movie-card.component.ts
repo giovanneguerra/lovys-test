@@ -30,12 +30,12 @@ import { MatCardModule } from '@angular/material/card';
   ],
 })
 export class MovieCardComponent {
-  MovieService = inject(MovieService);
+  movieService = inject(MovieService);
   router = inject(Router);
   @Input() movie: Movie;
 
   displayImage(imagePath: string): string {
-    return this.MovieService.convertToImagePath(imagePath);
+    return this.movieService.convertToImagePath(imagePath);
   }
 
   onMovieClick(movieId: number) {
