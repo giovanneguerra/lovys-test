@@ -11,33 +11,33 @@ import { NgIf } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
-    selector: 'moma-auth',
-    templateUrl: './auth.component.html',
-    styleUrls: ['./auth.component.scss'],
-    standalone: true,
-    imports: [MatCardModule, NgIf, MatProgressSpinnerModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, RouterLink]
+  selector: 'moma-auth',
+  templateUrl: './auth.component.html',
+  styleUrls: ['./auth.component.scss'],
+  standalone: true,
+  imports: [
+    MatCardModule,
+    NgIf,
+    MatProgressSpinnerModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    RouterLink,
+  ],
 })
-export class AuthComponent implements OnInit, OnDestroy{
+export class AuthComponent implements OnInit {
   authService = inject(AuthService);
   formBuilder = inject(FormBuilder);
   route = inject(ActivatedRoute);
   isSignup = false;
-  isLoading = false;
+  isLoading = this.authService.loading;
   authForm: FormGroup;
-  private loadingSubscription: Subscription;
 
   ngOnInit() {
     this.authForm = this.authService.initForm();
-    this.loadingSubscription = this.authService.isLoading$.subscribe(isLoading => {
-      this.isLoading = isLoading;
-    });
-
     this.isSignup = this.route.snapshot.routeConfig.path === 'sign-up';
     this.authForm = this.authService.initForm();
-  }
-
-  ngOnDestroy() {
-    this.loadingSubscription.unsubscribe();
   }
 
   onSubmit() {
@@ -50,5 +50,4 @@ export class AuthComponent implements OnInit, OnDestroy{
     this.isSignup = !this.isSignup;
     this.authForm = this.authService.initForm();
   }
-
 }
