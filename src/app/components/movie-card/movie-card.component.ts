@@ -1,6 +1,6 @@
 import { Component, Input, inject } from '@angular/core';
 import { Movie } from 'src/app/shared/models/movie';
-import { MediaService } from 'src/app/core/services/media.service';
+import { MovieService } from 'src/app/core/services/movie.service';
 import { Router } from '@angular/router';
 import { NoDescriptionPipe } from '../../shared/pipes/no-description.pipe';
 import { TrimTextPipe } from '../../shared/pipes/trim-text.pipe';
@@ -12,30 +12,30 @@ import { NgClass, NgFor, SlicePipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
-    selector: 'moma-movie-card',
-    templateUrl: './movie-card.component.html',
-    styleUrls: ['./movie-card.component.scss'],
-    standalone: true,
-    imports: [
-        MatCardModule,
-        NgClass,
-        ExtendedModule,
-        MatTooltipModule,
-        MatChipsModule,
-        NgFor,
-        SlicePipe,
-        GenrePipe,
-        TrimTextPipe,
-        NoDescriptionPipe,
-    ],
+  selector: 'moma-movie-card',
+  templateUrl: './movie-card.component.html',
+  styleUrls: ['./movie-card.component.scss'],
+  standalone: true,
+  imports: [
+    MatCardModule,
+    NgClass,
+    ExtendedModule,
+    MatTooltipModule,
+    MatChipsModule,
+    NgFor,
+    SlicePipe,
+    GenrePipe,
+    TrimTextPipe,
+    NoDescriptionPipe,
+  ],
 })
 export class MovieCardComponent {
-  mediaService = inject(MediaService);
+  MovieService = inject(MovieService);
   router = inject(Router);
   @Input() movie: Movie;
 
   displayImage(imagePath: string): string {
-    return this.mediaService.convertToImagePath(imagePath);
+    return this.MovieService.convertToImagePath(imagePath);
   }
 
   onMovieClick(movieId: number) {

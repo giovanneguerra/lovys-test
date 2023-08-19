@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MediaService } from 'src/app/core/services/media.service';
+import { MovieService } from 'src/app/core/services/movie.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Location, NgIf, NgFor } from '@angular/common';
 import { Crew } from 'src/app/shared/models/crew';
@@ -10,27 +10,22 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
-    selector: 'moma-movie-detail',
-    templateUrl: './movie-detail.component.html',
-    styleUrls: ['./movie-detail.component.scss'],
-    standalone: true,
-    imports: [
-        NgIf,
-        MatChipsModule,
-        NgFor,
-        MatProgressSpinnerModule,
-    ],
+  selector: 'moma-movie-detail',
+  templateUrl: './movie-detail.component.html',
+  styleUrls: ['./movie-detail.component.scss'],
+  standalone: true,
+  imports: [NgIf, MatChipsModule, NgFor, MatProgressSpinnerModule],
 })
 export class MovieDetailComponent implements OnInit {
   route = inject(ActivatedRoute);
   location = inject(Location);
-  mediaService = inject(MediaService);
+  MovieService = inject(MovieService);
   params = toSignal(this.route.paramMap);
-  movieDetail = this.mediaService.movieDetail;
-  movieCredits = this.mediaService.movieCredits;
+  movieDetail = this.MovieService.movieDetail;
+  movieCredits = this.MovieService.movieCredits;
 
   ngOnInit(): void {
-    this.mediaService.setMovieId(Number(this.params().get('id')));
+    this.MovieService.setMovieId(Number(this.params().get('id')));
   }
 
   getMovieCredits(movieCredits: Credits, role?: string): Cast[] | Crew[] | [] {
@@ -47,7 +42,7 @@ export class MovieDetailComponent implements OnInit {
   }
 
   displayImage(imagePath: string): string {
-    return this.mediaService.convertToImagePath(imagePath);
+    return this.MovieService.convertToImagePath(imagePath);
   }
 
   goBack() {
