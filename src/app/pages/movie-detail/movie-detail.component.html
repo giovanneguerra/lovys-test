@@ -8,15 +8,7 @@
   <div class="movieDetail__content">
     <h1>{{ movieInfo.detail?.title }}</h1>
     <p>{{ movieInfo.detail?.overview }}</p>
-    <mat-chip-listbox aria-label="Genres">
-      <mat-chip
-        class="genreChip"
-        disableRipple="true"
-        *ngFor="let genre of movieInfo.detail.genres"
-      >
-        {{ genre.name }}
-      </mat-chip>
-    </mat-chip-listbox>
+    <moma-movie-genres [genres]="movieInfo.detail.genres"></moma-movie-genres>
     <moma-movie-credits [credits]="movieInfo.credits"></moma-movie-credits>
     <a class="page-link" (click)="goBack()">Go back to the list</a>
   </div>

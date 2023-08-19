@@ -7,6 +7,7 @@ import { Credits } from 'src/app/shared/models/credits';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
 import { MovieCreditsComponent } from 'src/app/components/movie-credits/movie-credits.component';
+import { MovieGenresComponent } from 'src/app/components/movie-genres/movie-genres.component';
 
 @Component({
   selector: 'moma-movie-detail',
@@ -15,11 +16,10 @@ import { MovieCreditsComponent } from 'src/app/components/movie-credits/movie-cr
   standalone: true,
   imports: [
     NgIf,
-    MatChipsModule,
-    NgFor,
     MatProgressSpinnerModule,
     JsonPipe,
     MovieCreditsComponent,
+    MovieGenresComponent,
   ],
 })
 export class MovieDetailComponent implements OnInit {
