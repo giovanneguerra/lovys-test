@@ -1,0 +1,21 @@
+<div class="credits">
+  <p
+    class="credits__row"
+    *ngIf="getMovieCredits(credits, 'Director').length > 0"
+  >
+    <b>Directors: </b
+    ><span *ngFor="let director of getMovieCredits(credits, 'Director')"
+      >{{ director.name }}
+    </span>
+  </p>
+  <p class="credits__row" *ngIf="getMovieCredits(credits, 'Writer').length > 0">
+    <b>Writers: </b
+    ><span *ngFor="let writer of getMovieCredits(credits, 'Writer')"
+      >{{ writer.name }}
+    </span>
+  </p>
+  <p class="credits__row" *ngIf="getMovieCredits(credits).length > 0">
+    <b>Stars: </b
+    ><span *ngFor="let star of getMovieCredits(credits)">{{ star.name }} </span>
+  </p>
+</div>

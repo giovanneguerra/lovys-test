@@ -11,26 +11,4 @@
   .page-link {
     margin-top: 2rem;
   }
-
-  .info {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    padding: 2rem 1rem;
-    background-color: var(--light-color);
-
-    &__row {
-      padding-bottom: 1rem;
-      border-bottom: 2px solid var(--accent-color);
-      &:first-child {
-        padding-top: 1rem;
-        border-top: 2px solid var(--accent-color);
-      }
-      b {
-        margin-right: 1rem;
-      }
-      span {
-        margin: 0 0.5rem 0.2rem;
-      }
-    }
-  }
 }

@@ -6,13 +6,21 @@ import { Cast } from 'src/app/shared/models/cast';
 import { Credits } from 'src/app/shared/models/credits';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
+import { MovieCreditsComponent } from 'src/app/components/movie-credits/movie-credits.component';
+import { MovieGenresComponent } from 'src/app/components/movie-genres/movie-genres.component';
 
 @Component({
   selector: 'moma-movie-detail',
   templateUrl: './movie-detail.component.html',
   styleUrls: ['./movie-detail.component.scss'],
   standalone: true,
-  imports: [NgIf, MatChipsModule, NgFor, MatProgressSpinnerModule, JsonPipe],
+  imports: [
+    NgIf,
+    MatProgressSpinnerModule,
+    JsonPipe,
+    MovieCreditsComponent,
+    MovieGenresComponent,
+  ],
 })
 export class MovieDetailComponent implements OnInit {
   location = inject(Location);
@@ -24,19 +32,6 @@ export class MovieDetailComponent implements OnInit {
     if (this.id) {
       this.movieService.setMovieId(Number(this.id));
     }
-  }
-
-  getMovieCredits(movieCredits: Credits, role?: string): Cast[] | Crew[] | [] {
-    if (movieCredits) {
-      if (role) {
-        return movieCredits.crew
-          .filter((crew) => crew.job === role)
-          .slice(0, 3);
-      }
-
-      return movieCredits.cast.slice(0, 3);
-    }
-    return [];
   }
 
   displayImage(imagePath: string): string {
