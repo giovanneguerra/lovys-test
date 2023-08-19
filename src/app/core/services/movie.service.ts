@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
-import { catchError, map, shareReplay, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Genre } from 'src/app/shared/models/genre';
 import { Movie } from 'src/app/shared/models/movie';
@@ -10,7 +10,7 @@ import { Credits } from 'src/app/shared/models/credits';
 @Injectable({
   providedIn: 'root',
 })
-export class MediaService {
+export class MovieService {
   route = inject(ActivatedRoute);
   http = inject(HttpClient);
   selectedGenreId = signal<Genre>(0 as Genre);
@@ -24,30 +24,6 @@ export class MediaService {
     )
     .pipe(
       map((data) => data.genres),
-      shareReplay(1),
-      catchError((error: any) => {
-        console.error('API Error', error);
-        return [];
-      })
-    );
-
-  private tvGenres$ = this.http
-    .get<any>(
-      `${this.apiUrl}genre/tv/list?api_key=${this.apiKey}&language=en-US`
-    )
-    .pipe(
-      map((data) => data.genres),
-      shareReplay(1),
-      catchError((error: any) => {
-        console.error('API Error', error);
-        return [];
-      })
-    );
-
-  private trendingTvShows$ = this.http
-    .get<any>(`${this.apiUrl}trending/tv/day?api_key=${this.apiKey}`)
-    .pipe(
-      map((data) => data.results.slice(0, 5)),
       shareReplay(1),
       catchError((error: any) => {
         console.error('API Error', error);
@@ -150,9 +126,7 @@ export class MediaService {
     return `https://image.tmdb.org/t/p/w500${imagePath}`;
   }
 
-  trendingTvShows = toSignal<Movie[]>(this.trendingTvShows$);
   movieGenres = toSignal<Genre[]>(this.movieGenres$);
-  tvGenres = toSignal<Genre[]>(this.tvGenres$);
   upComingMovies = toSignal<Movie>(this.upcomingMovies$);
   popularMovies = toSignal<Movie[]>(this.popularMovies$);
   topRatedMovies = toSignal<Movie[]>(this.topRatedMovies$);
