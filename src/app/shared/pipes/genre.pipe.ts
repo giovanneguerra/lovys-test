@@ -3,7 +3,8 @@ import { Genre } from '../models/genre';
 
 
 @Pipe({
-  name: 'genre'
+    name: 'genre',
+    standalone: true
 })
 export class GenrePipe implements PipeTransform {
 

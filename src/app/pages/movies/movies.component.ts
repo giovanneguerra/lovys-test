@@ -1,16 +1,24 @@
 import { Component, EnvironmentInjector, OnInit, Signal, effect, inject, runInInjectionContext } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, map, startWith, switchMap, tap } from 'rxjs';
 import { MediaService } from 'src/app/core/services/media.service';
 import { Genre } from 'src/app/shared/models/genre';
 import { Movie } from 'src/app/shared/models/movie';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MovieCardComponent } from '../../components/movie-card/movie-card.component';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'moma-movies',
-  templateUrl: './movies.component.html',
-  styleUrls: ['./movies.component.scss']
+    selector: 'moma-movies',
+    templateUrl: './movies.component.html',
+    styleUrls: ['./movies.component.scss'],
+    standalone: true,
+    imports: [ReactiveFormsModule, NgIf, MatFormFieldModule, MatSelectModule, NgFor, MatOptionModule, MovieCardComponent, MatProgressSpinnerModule]
 })
 export class MoviesComponent implements OnInit{
   formBuilder = inject(FormBuilder);
