@@ -1,7 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { MovieService } from 'src/app/core/services/movie.service';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { Location, NgIf, NgFor } from '@angular/common';
 import { Crew } from 'src/app/shared/models/crew';
 import { Cast } from 'src/app/shared/models/cast';
@@ -17,15 +15,16 @@ import { MatChipsModule } from '@angular/material/chips';
   imports: [NgIf, MatChipsModule, NgFor, MatProgressSpinnerModule],
 })
 export class MovieDetailComponent implements OnInit {
-  route = inject(ActivatedRoute);
   location = inject(Location);
-  MovieService = inject(MovieService);
-  params = toSignal(this.route.paramMap);
-  movieDetail = this.MovieService.movieDetail;
-  movieCredits = this.MovieService.movieCredits;
+  movieService = inject(MovieService);
+  @Input() id = '';
+  movieDetail = this.movieService.movieDetail;
+  movieCredits = this.movieService.movieCredits;
 
   ngOnInit(): void {
-    this.MovieService.setMovieId(Number(this.params().get('id')));
+    if (this.id) {
+      this.movieService.setMovieId(Number(this.id));
+    }
   }
 
   getMovieCredits(movieCredits: Credits, role?: string): Cast[] | Crew[] | [] {
@@ -42,7 +41,7 @@ export class MovieDetailComponent implements OnInit {
   }
 
   displayImage(imagePath: string): string {
-    return this.MovieService.convertToImagePath(imagePath);
+    return this.movieService.convertToImagePath(imagePath);
   }
 
   goBack() {
