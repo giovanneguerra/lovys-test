@@ -17,39 +17,7 @@
         {{ genre.name }}
       </mat-chip>
     </mat-chip-listbox>
-    <div class="info">
-      <p
-        class="info__row"
-        *ngIf="getMovieCredits(movieInfo.credits, 'Director').length > 0"
-      >
-        <b>Directors: </b
-        ><span
-          *ngFor="
-            let director of getMovieCredits(movieInfo.credits, 'Director')
-          "
-          >{{ director.name }}
-        </span>
-      </p>
-      <p
-        class="info__row"
-        *ngIf="getMovieCredits(movieInfo.credits, 'Writer').length > 0"
-      >
-        <b>Writers: </b
-        ><span
-          *ngFor="let writer of getMovieCredits(movieInfo.credits, 'Writer')"
-          >{{ writer.name }}
-        </span>
-      </p>
-      <p
-        class="info__row"
-        *ngIf="getMovieCredits(movieInfo.credits).length > 0"
-      >
-        <b>Stars: </b
-        ><span *ngFor="let star of getMovieCredits(movieInfo.credits)"
-          >{{ star.name }}
-        </span>
-      </p>
-    </div>
+    <moma-movie-credits [credits]="movieInfo.credits"></moma-movie-credits>
     <a class="page-link" (click)="goBack()">Go back to the list</a>
   </div>
 </div>
