@@ -1,28 +1,49 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { MoviesComponent } from './pages/movies/movies.component';
-import { FavoritesComponent } from './pages/favorites/favorites.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { SignGuard } from './core/guards/sign.guard';
-import { AuthComponent } from './pages/auth/auth.component';
-import { MovieDetailComponent } from './pages/movie-detail/movie-detail.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'movies', component: MoviesComponent, canActivate: [AuthGuard] },
+  {
+    path: 'home',
+    loadComponent: () =>
+      import('./pages/home/home.component').then((c) => c.HomeComponent),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'movies',
+    loadComponent: () =>
+      import('./pages/movies/movies.component').then((c) => c.MoviesComponent),
+    canActivate: [AuthGuard],
+  },
   {
     path: 'movie-detail/:id',
-    component: MovieDetailComponent,
+    loadComponent: () =>
+      import('./pages/movie-detail/movie-detail.component').then(
+        (c) => c.MovieDetailComponent
+      ),
     canActivate: [AuthGuard],
   },
   {
     path: 'favorites',
-    component: FavoritesComponent,
+    loadComponent: () =>
+      import('./pages/favorites/favorites.component').then(
+        (c) => c.FavoritesComponent
+      ),
     canActivate: [AuthGuard],
   },
-  { path: 'login', component: AuthComponent, canActivate: [SignGuard] },
-  { path: 'sign-up', component: AuthComponent, canActivate: [SignGuard] },
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./pages/auth/auth.component').then((c) => c.AuthComponent),
+    canActivate: [SignGuard],
+  },
+  {
+    path: 'sign-up',
+    loadComponent: () =>
+      import('./pages/auth/auth.component').then((c) => c.AuthComponent),
+    canActivate: [SignGuard],
+  },
   { path: '**', redirectTo: 'home' },
 ];
 
