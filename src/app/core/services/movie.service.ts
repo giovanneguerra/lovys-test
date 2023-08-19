@@ -4,7 +4,8 @@ import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Genre } from 'src/app/shared/models/genre';
 import { Movie } from 'src/app/shared/models/movie';
-import { Credits } from 'src/app/shared/models/credits';
+import { combineLatest, concat, merge } from 'rxjs';
+import { MovieInformation } from 'src/app/shared/models/movie-information';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class MovieService {
   #apiUrl = 'https://api.themoviedb.org/3/';
   #apiKey = '0f60ad592a39d4b497a0d8889bba1be2';
 
-  private movieGenres$ = this.http
+  #movieGenres$ = this.http
     .get<any>(
       `${this.#apiUrl}genre/movie/list?api_key=${this.#apiKey}&language=en-US`
     )
@@ -29,7 +30,7 @@ export class MovieService {
       })
     );
 
-  private upcomingMovies$ = this.http
+  #upcomingMovies$ = this.http
     .get<any>(`${this.#apiUrl}movie/upcoming?api_key=${this.#apiKey}`)
     .pipe(
       map((data) => data.results.slice(0, 5)),
@@ -40,7 +41,7 @@ export class MovieService {
       })
     );
 
-  private popularMovies$ = this.http
+  #popularMovies$ = this.http
     .get<any>(
       `${this.#apiUrl}movie/popular?api_key=${
         this.#apiKey
@@ -55,7 +56,7 @@ export class MovieService {
       })
     );
 
-  private topRatedMovies$ = this.http
+  #topRatedMovies$ = this.http
     .get<any>(
       `${this.#apiUrl}movie/top_rated?api_key=${
         this.#apiKey
@@ -70,7 +71,7 @@ export class MovieService {
       })
     );
 
-  private movieListByGenre$ = toObservable(this.selectedGenreId).pipe(
+  #movieListByGenre$ = toObservable(this.selectedGenreId).pipe(
     switchMap((genreId) => {
       const url = `${this.#apiUrl}discover/movie?api_key=${
         this.#apiKey
@@ -86,7 +87,7 @@ export class MovieService {
     })
   );
 
-  private movieDetail$ = toObservable(this.#movieId).pipe(
+  #movieDetail$ = toObservable(this.#movieId).pipe(
     switchMap((movieId) => {
       if (movieId) {
         const url = `${this.#apiUrl}movie/${movieId}?api_key=${
@@ -104,7 +105,7 @@ export class MovieService {
     })
   );
 
-  private movieCredits$ = toObservable(this.#movieId).pipe(
+  #movieCredits$ = toObservable(this.#movieId).pipe(
     switchMap((movieId) => {
       if (movieId) {
         const url = `${this.#apiUrl}movie/${movieId}/credits?api_key=${
@@ -122,6 +123,12 @@ export class MovieService {
     })
   );
 
+  #movieInfo$ = combineLatest([this.#movieDetail$, this.#movieCredits$]).pipe(
+    map(([movieDetail, movieCredits]) => {
+      return { detail: movieDetail, credits: movieCredits } as MovieInformation;
+    })
+  );
+
   setSelectedGenreId(genreId: Genre) {
     this.selectedGenreId.set(genreId);
   }
@@ -134,11 +141,10 @@ export class MovieService {
     return `https://image.tmdb.org/t/p/w500${imagePath}`;
   }
 
-  movieGenres = toSignal<Genre[]>(this.movieGenres$);
-  upComingMovies = toSignal<Movie>(this.upcomingMovies$);
-  popularMovies = toSignal<Movie[]>(this.popularMovies$);
-  topRatedMovies = toSignal<Movie[]>(this.topRatedMovies$);
-  movieListByGenre = toSignal<Movie[]>(this.movieListByGenre$);
-  movieDetail = toSignal<Movie>(this.movieDetail$);
-  movieCredits = toSignal<Credits>(this.movieCredits$);
+  movieGenres = toSignal<Genre[]>(this.#movieGenres$);
+  upComingMovies = toSignal<Movie>(this.#upcomingMovies$);
+  popularMovies = toSignal<Movie[]>(this.#popularMovies$);
+  topRatedMovies = toSignal<Movie[]>(this.#topRatedMovies$);
+  movieListByGenre = toSignal<Movie[]>(this.#movieListByGenre$);
+  movieInfo = toSignal<any>(this.#movieInfo$);
 }

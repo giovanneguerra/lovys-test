@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { MovieService } from 'src/app/core/services/movie.service';
-import { Location, NgIf, NgFor } from '@angular/common';
+import { Location, NgIf, NgFor, JsonPipe } from '@angular/common';
 import { Crew } from 'src/app/shared/models/crew';
 import { Cast } from 'src/app/shared/models/cast';
 import { Credits } from 'src/app/shared/models/credits';
@@ -12,14 +12,13 @@ import { MatChipsModule } from '@angular/material/chips';
   templateUrl: './movie-detail.component.html',
   styleUrls: ['./movie-detail.component.scss'],
   standalone: true,
-  imports: [NgIf, MatChipsModule, NgFor, MatProgressSpinnerModule],
+  imports: [NgIf, MatChipsModule, NgFor, MatProgressSpinnerModule, JsonPipe],
 })
 export class MovieDetailComponent implements OnInit {
   location = inject(Location);
   movieService = inject(MovieService);
   @Input() id = '';
-  movieDetail = this.movieService.movieDetail;
-  movieCredits = this.movieService.movieCredits;
+  movieInfo = this.movieService.movieInfo;
 
   ngOnInit(): void {
     if (this.id) {

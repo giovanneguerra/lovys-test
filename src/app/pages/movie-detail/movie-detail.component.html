@@ -1,18 +1,18 @@
-<div class="movieDetail" *ngIf="movieDetail() as movieDetail; else loading">
+<div class="movieDetail" *ngIf="movieInfo() as movieInfo; else loading">
   <img
-    *ngIf="movieDetail.poster_path"
-    [src]="displayImage(movieDetail.poster_path)"
-    [alt]="movieDetail.title"
+    *ngIf="movieInfo.detail.poster_path"
+    [src]="displayImage(movieInfo.detail.poster_path)"
+    [alt]="movieInfo.detail.title"
     class="movieDetail__image"
   />
   <div class="movieDetail__content">
-    <h1>{{ movieDetail?.title }}</h1>
-    <p>{{ movieDetail?.overview }}</p>
+    <h1>{{ movieInfo.detail?.title }}</h1>
+    <p>{{ movieInfo.detail?.overview }}</p>
     <mat-chip-listbox aria-label="Genres">
       <mat-chip
         class="genreChip"
         disableRipple="true"
-        *ngFor="let genre of movieDetail.genres"
+        *ngFor="let genre of movieInfo.detail.genres"
       >
         {{ genre.name }}
       </mat-chip>
@@ -20,26 +20,32 @@
     <div class="info">
       <p
         class="info__row"
-        *ngIf="getMovieCredits(movieCredits(), 'Director').length > 0"
+        *ngIf="getMovieCredits(movieInfo.credits, 'Director').length > 0"
       >
         <b>Directors: </b
         ><span
-          *ngFor="let director of getMovieCredits(movieCredits(), 'Director')"
+          *ngFor="
+            let director of getMovieCredits(movieInfo.credits, 'Director')
+          "
           >{{ director.name }}
         </span>
       </p>
       <p
         class="info__row"
-        *ngIf="getMovieCredits(movieCredits(), 'Writer').length > 0"
+        *ngIf="getMovieCredits(movieInfo.credits, 'Writer').length > 0"
       >
         <b>Writers: </b
-        ><span *ngFor="let writer of getMovieCredits(movieCredits(), 'Writer')"
+        ><span
+          *ngFor="let writer of getMovieCredits(movieInfo.credits, 'Writer')"
           >{{ writer.name }}
         </span>
       </p>
-      <p class="info__row" *ngIf="getMovieCredits(movieCredits()).length > 0">
+      <p
+        class="info__row"
+        *ngIf="getMovieCredits(movieInfo.credits).length > 0"
+      >
         <b>Stars: </b
-        ><span *ngFor="let star of getMovieCredits(movieCredits())"
+        ><span *ngFor="let star of getMovieCredits(movieInfo.credits)"
           >{{ star.name }}
         </span>
       </p>
