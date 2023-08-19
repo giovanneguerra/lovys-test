@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'trimText'
+    name: 'trimText',
+    standalone: true
 })
 export class TrimTextPipe implements PipeTransform {
 

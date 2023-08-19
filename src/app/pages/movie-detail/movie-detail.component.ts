@@ -2,15 +2,24 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MediaService } from 'src/app/core/services/media.service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Location } from '@angular/common';
+import { Location, NgIf, NgFor } from '@angular/common';
 import { Crew } from 'src/app/shared/models/crew';
 import { Cast } from 'src/app/shared/models/cast';
 import { Credits } from 'src/app/shared/models/credits';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
-  selector: 'moma-movie-detail',
-  templateUrl: './movie-detail.component.html',
-  styleUrls: ['./movie-detail.component.scss'],
+    selector: 'moma-movie-detail',
+    templateUrl: './movie-detail.component.html',
+    styleUrls: ['./movie-detail.component.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        MatChipsModule,
+        NgFor,
+        MatProgressSpinnerModule,
+    ],
 })
 export class MovieDetailComponent implements OnInit {
   route = inject(ActivatedRoute);

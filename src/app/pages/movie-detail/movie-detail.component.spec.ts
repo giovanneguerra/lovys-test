@@ -8,8 +8,8 @@ describe('MovieDetailComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MovieDetailComponent]
-    });
+    imports: [MovieDetailComponent]
+});
     fixture = TestBed.createComponent(MovieDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
