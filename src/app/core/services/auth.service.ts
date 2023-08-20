@@ -112,4 +112,8 @@ export class AuthService {
   isUserLoggedIn(): Observable<boolean> {
     return this.auth.authState.pipe(map((user) => !!user));
   }
+
+  getUserEmail(): Observable<string | null> {
+    return this.auth.authState.pipe(map((user) => (user ? user.email : null)));
+  }
 }

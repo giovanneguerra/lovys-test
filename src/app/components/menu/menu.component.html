@@ -5,12 +5,25 @@
   <img src="../../../assets/images/logo.svg" class="logo" />
   <span class="example-spacer"></span>
   <div fxFlex fxHide fxShow.gt-xs>
-    <ng-container *ngIf="isLoggedIn; else showLoginLink">
-      <a routerLink="/home" class="menu-link">Home</a>
-      <a routerLink="/movies" class="menu-link">Movies</a>
-      <a routerLink="/favorites" class="menu-link">Favorites</a>
-      <a (click)="logout()" routerLink="/login" class="menu-link">Logout</a>
-    </ng-container>
+    <div class="content" *ngIf="isLoggedIn; else showLoginLink">
+      <div class="content__links">
+        <a routerLink="/home" routerLinkActive="active" class="menu-link"
+          >Home</a
+        >
+        <a routerLink="/movies" routerLinkActive="active" class="menu-link"
+          >Movies</a
+        >
+        <a routerLink="/favorites" routerLinkActive="active" class="menu-link"
+          >Favorites</a
+        >
+      </div>
+      <div class="content__user">
+        <span>{{ userEmail | async }}</span>
+        <a (click)="logout()" routerLink="/login" class="menu-link"
+          ><mat-icon>logout</mat-icon></a
+        >
+      </div>
+    </div>
     <ng-template #showLoginLink>
       <a routerLink="/login" class="menu-link">Login</a>
     </ng-template>
