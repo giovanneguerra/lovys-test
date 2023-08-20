@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Movie } from 'src/app/shared/models/movie';
 import { MovieCardComponent } from '../movie-card/movie-card.component';
 import { Router } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'moma-movie-gallery',
   standalone: true,
-  imports: [CommonModule, MovieCardComponent],
+  imports: [CommonModule, MovieCardComponent, MatProgressSpinnerModule],
   templateUrl: './movie-gallery.component.html',
   styleUrls: ['./movie-gallery.component.scss'],
 })

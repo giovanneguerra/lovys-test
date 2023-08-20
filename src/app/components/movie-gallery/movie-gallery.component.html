@@ -1,10 +1,13 @@
-<div class="movieList">
-  <div class="movieList__container">
-    <moma-movie-card
-      *ngFor="let movie of movies"
-      [movie]="movie"
-      (click)="onMovieClick(movie.id)"
-    >
-    </moma-movie-card>
+<ng-container *ngIf="movies; else loading">
+  <div class="movieList">
+    <div class="movieList__container">
+      <moma-movie-card
+        *ngFor="let movie of movies"
+        [movie]="movie"
+        (click)="onMovieClick(movie.id)"
+      >
+      </moma-movie-card>
+    </div>
   </div>
-</div>
+</ng-container>
+<ng-template #loading><mat-spinner class="loader"></mat-spinner></ng-template>

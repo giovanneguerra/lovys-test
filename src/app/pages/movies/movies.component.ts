@@ -11,7 +11,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { tap } from 'rxjs';
 import { MovieService } from 'src/app/core/services/movie.service';
 import { Genre } from 'src/app/shared/models/genre';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -25,12 +24,11 @@ import { MovieGalleryComponent } from 'src/app/components/movie-gallery/movie-ga
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    NgIf,
     MatFormFieldModule,
     MatSelectModule,
+    NgIf,
     NgFor,
     MatOptionModule,
-    MatProgressSpinnerModule,
     MovieGalleryComponent,
   ],
 })

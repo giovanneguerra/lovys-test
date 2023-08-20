@@ -10,10 +10,5 @@
       </mat-select>
     </mat-form-field>
   </form>
-  <ng-container *ngIf="movieListByGenre() as movies; else loading">
-    <div *ngIf="movies.length > 0">
-      <moma-movie-gallery [movies]="movies"></moma-movie-gallery>
-    </div>
-  </ng-container>
-  <ng-template #loading><mat-spinner class="loader"></mat-spinner></ng-template>
+  <moma-movie-gallery [movies]="movieListByGenre()"></moma-movie-gallery>
 </div>
