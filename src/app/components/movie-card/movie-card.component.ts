@@ -10,6 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ExtendedModule } from '@angular/flex-layout/extended';
 import { NgClass, NgFor, SlicePipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
+import { TooltipPipe } from 'src/app/shared/pipes/tooltip.pipe';
 
 @Component({
   selector: 'moma-movie-card',
@@ -27,6 +28,7 @@ import { MatCardModule } from '@angular/material/card';
     GenrePipe,
     TrimTextPipe,
     NoDescriptionPipe,
+    TooltipPipe,
   ],
 })
 export class MovieCardComponent {
@@ -40,9 +42,5 @@ export class MovieCardComponent {
 
   onMovieClick(movieId: number) {
     this.router.navigate(['/movie-detail', movieId]);
-  }
-
-  displayTooltip(title: string): string | undefined {
-    return title.length > 16 ? title : undefined;
   }
 }

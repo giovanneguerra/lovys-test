@@ -3,6 +3,7 @@ import { Movie } from 'src/app/shared/models/movie';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MovieCardComponent } from '../movie-card/movie-card.component';
 import { NgIf, NgFor } from '@angular/common';
+import { TooltipPipe } from 'src/app/shared/pipes/tooltip.pipe';
 
 @Component({
   selector: 'moma-movies-list',
@@ -14,8 +15,4 @@ import { NgIf, NgFor } from '@angular/common';
 export class MoviesListComponent {
   @Input() title: string;
   @Input() moviesList: Signal<Movie[]>;
-
-  displayTooltip(title: string): string | undefined {
-    return title.length > 16 ? title : undefined;
-  }
 }
