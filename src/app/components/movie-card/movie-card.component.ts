@@ -11,6 +11,7 @@ import { ExtendedModule } from '@angular/flex-layout/extended';
 import { NgClass, NgFor, SlicePipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { TooltipPipe } from 'src/app/shared/pipes/tooltip.pipe';
+import { DisplayImagePipe } from 'src/app/shared/pipes/display-image.pipe';
 
 @Component({
   selector: 'moma-movie-card',
@@ -29,16 +30,13 @@ import { TooltipPipe } from 'src/app/shared/pipes/tooltip.pipe';
     TrimTextPipe,
     NoDescriptionPipe,
     TooltipPipe,
+    DisplayImagePipe,
   ],
 })
 export class MovieCardComponent {
   movieService = inject(MovieService);
   router = inject(Router);
   @Input() movie: Movie;
-
-  displayImage(imagePath: string): string {
-    return this.movieService.convertToImagePath(imagePath);
-  }
 
   onMovieClick(movieId: number) {
     this.router.navigate(['/movie-detail', movieId]);

@@ -8,6 +8,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
 import { MovieCreditsComponent } from 'src/app/components/movie-credits/movie-credits.component';
 import { MovieGenresComponent } from 'src/app/components/movie-genres/movie-genres.component';
+import { DisplayImagePipe } from 'src/app/shared/pipes/display-image.pipe';
 
 @Component({
   selector: 'moma-movie-detail',
@@ -20,6 +21,7 @@ import { MovieGenresComponent } from 'src/app/components/movie-genres/movie-genr
     JsonPipe,
     MovieCreditsComponent,
     MovieGenresComponent,
+    DisplayImagePipe,
   ],
 })
 export class MovieDetailComponent implements OnInit {
@@ -32,10 +34,6 @@ export class MovieDetailComponent implements OnInit {
     if (this.id) {
       this.movieService.setMovieId(Number(this.id));
     }
-  }
-
-  displayImage(imagePath: string): string {
-    return this.movieService.convertToImagePath(imagePath);
   }
 
   goBack() {

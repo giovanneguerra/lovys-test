@@ -9,7 +9,7 @@
   <img
     mat-card-image
     class="movieCard__image"
-    [src]="displayImage(movie.poster_path)"
+    [src]="movie.poster_path | displayImage"
     [alt]="movie.name"
   />
   <mat-card-content>
