@@ -73,8 +73,4 @@ export class MoviesComponent implements OnInit {
   displayImage(imagePath: string): string {
     return this.movieService.convertToImagePath(imagePath);
   }
-
-  displayTooltip(title: string): string | undefined {
-    return title.length > 16 ? title : undefined;
-  }
 }
