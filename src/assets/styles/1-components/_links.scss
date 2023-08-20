@@ -9,7 +9,7 @@
   background-size: 200% 100%;
   background-position: -100%;
   display: inline-block;
-  padding: 5px 0;
+  padding: 0;
   position: relative;
   transition: all 0.3s ease-in-out;
 
@@ -32,6 +32,8 @@
 
   &:hover {
     cursor: pointer;
+    padding: 0.2rem;
+    color: var(--light-color);
     background-position: 0;
 
     &:before {
