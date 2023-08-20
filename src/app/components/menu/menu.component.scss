@@ -1,11 +1,24 @@
 mat-toolbar {
-    &.toolbar {
-        background: var(--dark-color);
-    }
-    .logo {
+  &.toolbar {
+    background: var(--dark-color);
+  }
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &__user {
+      display: flex;
+      align-items: center;
+      span {
+        color: white;
         margin-right: 1rem;
+      }
     }
-    .logout {
-        flex-direction: row-reverse;
-    }
+  }
+  .logo {
+    margin-right: 1rem;
+  }
+  .logout {
+    flex-direction: row-reverse;
+  }
 }
