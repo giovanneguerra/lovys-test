@@ -1,7 +1,7 @@
 <div class="movieDetail" *ngIf="movieInfo() as movieInfo; else loading">
   <img
     *ngIf="movieInfo.detail.poster_path"
-    [src]="displayImage(movieInfo.detail.poster_path)"
+    [src]="movieInfo.detail.poster_path | displayImage"
     [alt]="movieInfo.detail.title"
     class="movieDetail__image"
   />

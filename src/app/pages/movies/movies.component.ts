@@ -69,8 +69,4 @@ export class MoviesComponent implements OnInit {
   onMovieClick(movieId: number) {
     this.router.navigate(['/movie-detail', movieId]);
   }
-
-  displayImage(imagePath: string): string {
-    return this.movieService.convertToImagePath(imagePath);
-  }
 }
