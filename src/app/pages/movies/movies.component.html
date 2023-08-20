@@ -12,16 +12,7 @@
   </form>
   <ng-container *ngIf="movieListByGenre() as movies; else loading">
     <div *ngIf="movies.length > 0">
-      <div class="movieList">
-        <div class="movieList__container">
-          <moma-movie-card
-            *ngFor="let movie of movies"
-            [movie]="movie"
-            (click)="onMovieClick(movie.id)"
-          >
-          </moma-movie-card>
-        </div>
-      </div>
+      <moma-movie-gallery [movies]="movies"></moma-movie-gallery>
     </div>
   </ng-container>
   <ng-template #loading><mat-spinner class="loader"></mat-spinner></ng-template>
