@@ -137,10 +137,6 @@ export class MovieService {
     this.#movieId.set(movieId);
   }
 
-  convertToImagePath(imagePath: string): string {
-    return `https://image.tmdb.org/t/p/w500${imagePath}`;
-  }
-
   movieGenres = toSignal<Genre[]>(this.#movieGenres$);
   upComingMovies = toSignal<Movie>(this.#upcomingMovies$);
   popularMovies = toSignal<Movie[]>(this.#popularMovies$);
