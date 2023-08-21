@@ -5,7 +5,7 @@
   <img src="../../../assets/images/logo.svg" class="logo" />
   <span class="example-spacer"></span>
   <div fxFlex fxHide fxShow.gt-xs>
-    <div class="content" *ngIf="isLoggedIn; else showLoginLink">
+    <div class="content" *ngIf="!!user()?.uid; else showLoginLink">
       <div class="content__links">
         <a routerLink="/home" routerLinkActive="active" class="menu-link"
           >Home</a
@@ -18,7 +18,7 @@
         >
       </div>
       <div class="content__user">
-        <span>{{ userEmail | async }}</span>
+        <span>{{ user()?.email }}</span>
         <a (click)="logout()" routerLink="/login" class="menu-link"
           ><mat-icon>logout</mat-icon></a
         >
@@ -32,10 +32,10 @@
 
 <mat-menu #menu="matMenu">
   <a mat-menu-item routerLink="/">Home</a>
-  <a mat-menu-item routerLink="/movies" *ngIf="isLoggedIn">Movies</a>
-  <a mat-menu-item routerLink="/favorites" *ngIf="isLoggedIn">Favorites</a>
-  <a mat-menu-item routerLink="/login" *ngIf="!isLoggedIn">Login</a>
-  <a mat-menu-item (click)="logout()" *ngIf="isLoggedIn" class="logout"
+  <a mat-menu-item routerLink="/movies" *ngIf="!!user()?.uid">Movies</a>
+  <a mat-menu-item routerLink="/favorites" *ngIf="!!user()?.uid">Favorites</a>
+  <a mat-menu-item routerLink="/login" *ngIf="!user()?.uid">Login</a>
+  <a mat-menu-item (click)="logout()" *ngIf="!!user()?.uid" class="logout"
     >Logout <mat-icon>exit_to_app</mat-icon></a
   >
 </mat-menu>

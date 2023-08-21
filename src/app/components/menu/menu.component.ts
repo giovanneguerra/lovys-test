@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, computed, effect, inject } from '@angular/core';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
@@ -24,24 +24,15 @@ import { Observable } from 'rxjs';
     FlexModule,
     NgIf,
     RouterLink,
-    AsyncPipe,
     MatIconModule,
     RouterLinkActive,
   ],
 })
-export class MenuComponent implements OnInit {
-  authService = inject(AuthService);
-  isLoggedIn = false;
-  userEmail: Observable<string>;
-
-  ngOnInit(): void {
-    this.authService.isUserLoggedIn().subscribe((loggedIn) => {
-      this.isLoggedIn = loggedIn;
-    });
-    this.userEmail = this.authService.getUserEmail();
-  }
+export class MenuComponent {
+  #authService = inject(AuthService);
+  user = this.#authService.user;
 
   logout() {
-    this.authService.logout();
+    this.#authService.logout();
   }
 }
