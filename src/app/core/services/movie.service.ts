@@ -20,7 +20,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class MovieService {
-  http = inject(HttpClient);
+  #http = inject(HttpClient);
   #db = inject(AngularFirestore);
   #auth = inject(AuthService);
   selectedGenreId = signal<Genre>(0 as Genre);
@@ -28,7 +28,7 @@ export class MovieService {
   #apiUrl = 'https://api.themoviedb.org/3/';
   #apiKey = '0f60ad592a39d4b497a0d8889bba1be2';
 
-  #movieGenres$ = this.http
+  #movieGenres$ = this.#http
     .get<any>(
       `${this.#apiUrl}genre/movie/list?api_key=${this.#apiKey}&language=en-US`
     )
@@ -41,7 +41,7 @@ export class MovieService {
       })
     );
 
-  #upcomingMovies$ = this.http
+  #upcomingMovies$ = this.#http
     .get<any>(`${this.#apiUrl}movie/upcoming?api_key=${this.#apiKey}`)
     .pipe(
       map((data) => data.results.slice(0, 5)),
@@ -52,7 +52,7 @@ export class MovieService {
       })
     );
 
-  #popularMovies$ = this.http
+  #popularMovies$ = this.#http
     .get<any>(
       `${this.#apiUrl}movie/popular?api_key=${
         this.#apiKey
@@ -67,7 +67,7 @@ export class MovieService {
       })
     );
 
-  #topRatedMovies$ = this.http
+  #topRatedMovies$ = this.#http
     .get<any>(
       `${this.#apiUrl}movie/top_rated?api_key=${
         this.#apiKey
@@ -87,7 +87,7 @@ export class MovieService {
       const url = `${this.#apiUrl}discover/movie?api_key=${
         this.#apiKey
       }&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genreId}`;
-      return this.http.get<any>(url).pipe(
+      return this.#http.get<any>(url).pipe(
         map((data) => data.results.slice(0, 10)),
         shareReplay(1),
         catchError((error: any) => {
@@ -104,7 +104,7 @@ export class MovieService {
         const url = `${this.#apiUrl}movie/${movieId}?api_key=${
           this.#apiKey
         }&language=en-US`;
-        return this.http.get<any>(url).pipe(
+        return this.#http.get<any>(url).pipe(
           shareReplay(1),
           catchError((error: any) => {
             console.error('API Error', error);
@@ -122,7 +122,7 @@ export class MovieService {
         const url = `${this.#apiUrl}movie/${movieId}/credits?api_key=${
           this.#apiKey
         }&language=en-US`;
-        return this.http.get<any>(url).pipe(
+        return this.#http.get<any>(url).pipe(
           shareReplay(1),
           catchError((error: any) => {
             console.error('API Error', error);
@@ -155,7 +155,7 @@ export class MovieService {
           switchMap((favoriteMovieIds) => {
             return from(favoriteMovieIds).pipe(
               mergeMap((movieId) => {
-                return this.http.get<Movie[]>(
+                return this.#http.get<Movie[]>(
                   `${this.#apiUrl}movie/${movieId}?api_key=${
                     this.#apiKey
                   }&language=en-US`
