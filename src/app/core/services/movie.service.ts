@@ -1,17 +1,28 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject, signal } from '@angular/core';
-import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
+import { Injectable, effect, inject, signal } from '@angular/core';
+import {
+  catchError,
+  map,
+  mergeMap,
+  shareReplay,
+  switchMap,
+  toArray,
+} from 'rxjs/operators';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Genre } from 'src/app/shared/models/genre';
 import { Movie } from 'src/app/shared/models/movie';
-import { combineLatest, concat, merge } from 'rxjs';
+import { combineLatest, from, of } from 'rxjs';
 import { MovieInformation } from 'src/app/shared/models/movie-information';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MovieService {
   http = inject(HttpClient);
+  #db = inject(AngularFirestore);
+  #auth = inject(AuthService);
   selectedGenreId = signal<Genre>(0 as Genre);
   #movieId = signal<number>(0);
   #apiUrl = 'https://api.themoviedb.org/3/';
@@ -128,6 +139,36 @@ export class MovieService {
       return { detail: movieDetail, credits: movieCredits } as MovieInformation;
     })
   );
+
+  getUserFavorites() {
+    const currentUid = this.#auth.user().uid;
+    if (currentUid) {
+      return this.#db
+        .collection('favorites', (ref) => ref.where('userId', '==', currentUid))
+        .snapshotChanges()
+        .pipe(
+          map((snaps) => {
+            return snaps.map((snap) => {
+              return snap.payload.doc.get('movieId');
+            });
+          }),
+          switchMap((favoriteMovieIds) => {
+            return from(favoriteMovieIds).pipe(
+              mergeMap((movieId) => {
+                return this.http.get<Movie[]>(
+                  `${this.#apiUrl}movie/${movieId}?api_key=${
+                    this.#apiKey
+                  }&language=en-US`
+                );
+              }),
+              toArray()
+            );
+          })
+        );
+    } else {
+      return of([]);
+    }
+  }
 
   setSelectedGenreId(genreId: Genre) {
     this.selectedGenreId.set(genreId);
