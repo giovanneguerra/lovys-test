@@ -1,27 +1,17 @@
-import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  Router,
-  UrlTree,
-} from '@angular/router';
+import { Injectable, inject } from '@angular/core';
+import { Router, UrlTree } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { Observable, map, take } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class SignGuard {
-  constructor(private authService: AuthService, private router: Router) {}
+  #authService = inject(AuthService);
+  #router = inject(Router);
 
-  canActivate(next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> {
-      return this.authService.isUserLoggedIn().pipe(
-        take(1),
-        map(loggedIn => {
-          return !loggedIn ? true : this.router.createUrlTree(['/']);
-      }));
+  canActivate(): boolean | UrlTree {
+    return !this.#authService.isUserLoggedIn()
+      ? true
+      : this.#router.createUrlTree(['/']);
   }
-
-};
+}
