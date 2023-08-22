@@ -1,17 +1,16 @@
-import { Injectable, inject } from '@angular/core';
-import { Router, UrlTree } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { inject } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AuthGuard {
-  #authService = inject(AuthService);
-  #router = inject(Router);
-
-  canActivate(): boolean | UrlTree {
-    return this.#authService.isUserLoggedIn()
-      ? true
-      : this.#router.createUrlTree(['/login']);
-  }
-}
+export const AuthGuard = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+) => {
+  const auth = inject(AuthService);
+  const router = inject(Router);
+  return auth.isUserLoggedIn() ? true : router.createUrlTree(['/login']);
+};
