@@ -140,7 +140,7 @@ export class MovieService {
     })
   );
 
-  getUserFavorites() {
+  getUserFavoriteMovies() {
     const currentUid = this.#auth.user().uid;
     if (currentUid) {
       return this.#db

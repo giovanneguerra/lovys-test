@@ -19,6 +19,6 @@ export class FavoritesComponent implements OnInit {
   favorites$: Observable<Movie[]>;
 
   ngOnInit(): void {
-    this.favorites$ = this.movieService.getUserFavorites();
+    this.favorites$ = this.movieService.getUserFavoriteMovies();
   }
 }

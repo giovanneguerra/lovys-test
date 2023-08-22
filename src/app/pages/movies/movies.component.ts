@@ -45,15 +45,13 @@ export class MoviesComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    runInInjectionContext(this.injector, () => {
-      this.searchResults = toSignal<Genre>(
-        this.movieForm.get('selectedGenre').valueChanges.pipe(
-          tap((genreId) => {
-            this.movieService.setSelectedGenreId(genreId);
-          })
-        )
-      );
-    });
+    this.searchResults = toSignal<Genre>(
+      this.movieForm.get('selectedGenre').valueChanges.pipe(
+        tap((genreId) => {
+          this.movieService.setSelectedGenreId(genreId);
+        })
+      )
+    );
   }
 
   private initForm() {
