@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, computed, effect, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import {
   catchError,
   map,
@@ -170,6 +170,27 @@ export class MovieService {
       }
     })
   );
+
+  toggleUserFavorite() {
+    const movieDocumentId$ = this.#db
+      .collection('favorites', (ref) =>
+        ref
+          .where('userId', '==', this.#auth.user().uid)
+          .where('movieId', '==', this.#movieId())
+      )
+      .get()
+      .pipe(map((val) => val.docs[0]?.id));
+
+    movieDocumentId$.subscribe((docId) => {
+      const favoriteRef = this.#db.collection('favorites');
+      docId
+        ? favoriteRef.doc(docId).delete()
+        : favoriteRef.add({
+            movieId: this.#movieId(),
+            userId: this.#auth.user().uid,
+          });
+    });
+  }
 
   setSelectedGenreId(genreId: Genre) {
     this.selectedGenreId.set(genreId);

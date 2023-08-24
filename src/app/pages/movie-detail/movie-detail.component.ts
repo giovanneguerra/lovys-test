@@ -35,6 +35,10 @@ export class MovieDetailComponent implements OnInit {
     }
   }
 
+  toggleFavorite() {
+    this.movieService.toggleUserFavorite();
+  }
+
   displayFavoriteMovie(isFavorite: boolean): string {
     return isFavorite ? 'favorite' : 'favorite_outline';
   }

@@ -8,7 +8,7 @@
   <div class="movieDetail__content">
     <h1>{{ movieInfo.detail?.title }}</h1>
     <p>{{ movieInfo.detail?.overview }}</p>
-    <mat-icon>{{
+    <mat-icon (click)="toggleFavorite()">{{
       displayFavoriteMovie(isMovieFavorite().length > 0)
     }}</mat-icon>
     <moma-movie-genres [genres]="movieInfo.detail.genres"></moma-movie-genres>
