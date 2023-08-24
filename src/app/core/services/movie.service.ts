@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, effect, inject, signal } from '@angular/core';
+import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import {
   catchError,
   map,
@@ -186,4 +186,9 @@ export class MovieService {
   movieListByGenre = toSignal<Movie[]>(this.#movieListByGenre$);
   movieInfo = toSignal<any>(this.#movieInfo$);
   userFavoriteMovies = toSignal<Movie[]>(this.#userFavoriteMovies$);
+  isMovieFavorite = computed(() => {
+    return this.userFavoriteMovies().filter(
+      (val) => val.id === this.#movieId()
+    );
+  });
 }
