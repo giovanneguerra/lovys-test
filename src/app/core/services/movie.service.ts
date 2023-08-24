@@ -140,35 +140,36 @@ export class MovieService {
     })
   );
 
-  getUserFavoriteMovies() {
-    const currentUid = this.#auth.user().uid;
-    if (currentUid) {
-      return this.#db
-        .collection('favorites', (ref) => ref.where('userId', '==', currentUid))
-        .snapshotChanges()
-        .pipe(
-          map((snaps) => {
-            return snaps.map((snap) => {
-              return snap.payload.doc.get('movieId');
-            });
-          }),
-          switchMap((favoriteMovieIds) => {
-            return from(favoriteMovieIds).pipe(
-              mergeMap((movieId) => {
-                return this.#http.get<Movie[]>(
-                  `${this.#apiUrl}movie/${movieId}?api_key=${
-                    this.#apiKey
-                  }&language=en-US`
-                );
-              }),
-              toArray()
-            );
-          })
-        );
-    } else {
-      return of([]);
-    }
-  }
+  #userFavoriteMovies$ = toObservable(this.#auth.user).pipe(
+    switchMap((user) => {
+      if (user.uid) {
+        return this.#db
+          .collection('favorites', (ref) => ref.where('userId', '==', user.uid))
+          .snapshotChanges()
+          .pipe(
+            map((snaps) => {
+              return snaps.map((snap) => {
+                return snap.payload.doc.get('movieId');
+              });
+            }),
+            switchMap((favoriteMovieIds) => {
+              return from(favoriteMovieIds).pipe(
+                mergeMap((movieId) => {
+                  return this.#http.get<Movie[]>(
+                    `${this.#apiUrl}movie/${movieId}?api_key=${
+                      this.#apiKey
+                    }&language=en-US`
+                  );
+                }),
+                toArray()
+              );
+            })
+          );
+      } else {
+        return of([]);
+      }
+    })
+  );
 
   setSelectedGenreId(genreId: Genre) {
     this.selectedGenreId.set(genreId);
@@ -184,4 +185,5 @@ export class MovieService {
   topRatedMovies = toSignal<Movie[]>(this.#topRatedMovies$);
   movieListByGenre = toSignal<Movie[]>(this.#movieListByGenre$);
   movieInfo = toSignal<any>(this.#movieInfo$);
+  userFavoriteMovies = toSignal<Movie[]>(this.#userFavoriteMovies$);
 }
