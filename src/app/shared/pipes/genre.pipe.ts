@@ -37,7 +37,7 @@ export class GenrePipe implements PipeTransform {
       case Genre.Romance:
         return 'Romance';
       case Genre.ScienceFiction:
-        return 'Science Fiction';
+        return 'Sci-Fi';
       case Genre.Thriller:
         return 'Thriller';
       case Genre.TVMovie:
