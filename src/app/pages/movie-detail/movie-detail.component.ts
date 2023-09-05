@@ -1,11 +1,13 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, computed, inject } from '@angular/core';
 import { MovieService } from 'src/app/core/services/movie.service';
-import { Location, NgIf, NgFor, JsonPipe } from '@angular/common';
+import { Location, NgIf, NgFor, JsonPipe, AsyncPipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MovieCreditsComponent } from 'src/app/components/movie-credits/movie-credits.component';
 import { MovieGenresComponent } from 'src/app/components/movie-genres/movie-genres.component';
 import { DisplayImagePipe } from 'src/app/shared/pipes/display-image.pipe';
 import { MatIconModule } from '@angular/material/icon';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Movie } from 'src/app/shared/models/movie';
 
 @Component({
   selector: 'moma-movie-detail',
@@ -20,23 +22,32 @@ import { MatIconModule } from '@angular/material/icon';
     MovieGenresComponent,
     DisplayImagePipe,
     MatIconModule,
+    AsyncPipe,
   ],
 })
 export class MovieDetailComponent implements OnInit {
-  location = inject(Location);
-  movieService = inject(MovieService);
+  #location = inject(Location);
+  #movieService = inject(MovieService);
   @Input() id = '';
-  movieInfo = this.movieService.movieInfo;
-  isMovieFavorite = this.movieService.isMovieFavorite;
+  movieInfo = toSignal<any>(this.#movieService.movieInfo$);
+  userFavoriteMovies = toSignal<Movie[]>(
+    this.#movieService.userFavoriteMovies$
+  );
+  isMovieFavorite = computed(() => {
+    return this.userFavoriteMovies()?.filter(
+      (val) => val.id === Number(this.id)
+    );
+  });
+  // isMovieFavorite = this.#movieService.isMovieFavorite;
 
   ngOnInit(): void {
     if (this.id) {
-      this.movieService.setMovieId(Number(this.id));
+      this.#movieService.setMovieId(Number(this.id));
     }
   }
 
   toggleFavorite() {
-    this.movieService.toggleUserFavorite();
+    this.#movieService.toggleMovieFavorite();
   }
 
   displayFavoriteMovie(isFavorite: boolean): string {
@@ -44,6 +55,6 @@ export class MovieDetailComponent implements OnInit {
   }
 
   goBack() {
-    this.location.back();
+    this.#location.back();
   }
 }

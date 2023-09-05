@@ -20,6 +20,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgIf, NgFor } from '@angular/common';
 import { MovieGalleryComponent } from 'src/app/components/movie-gallery/movie-gallery.component';
+import { Movie } from 'src/app/shared/models/movie';
 
 @Component({
   selector: 'moma-movies',
@@ -41,10 +42,10 @@ export class MoviesComponent implements OnInit {
   #movieService = inject(MovieService);
   #injector = inject(Injector);
 
-  movieGenres = this.#movieService.movieGenres;
+  movieGenres = toSignal<Genre[]>(this.#movieService.movieGenres$);
   movieForm: FormGroup;
   search = signal(this.#movieService.selectedGenreId());
-  movieListByGenre = this.#movieService.movieListByGenre;
+  movieListByGenre = toSignal<Movie[]>(this.#movieService.movieListByGenre$);
   selectedGenreId: Genre;
 
   ngOnInit() {
