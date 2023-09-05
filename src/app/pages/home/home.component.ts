@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { MovieService } from 'src/app/core/services/movie.service';
 import { MoviesListComponent } from '../../components/movies-list/movies-list.component';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Movie } from 'src/app/shared/models/movie';
 
 @Component({
   selector: 'moma-home',
@@ -11,8 +13,7 @@ import { MoviesListComponent } from '../../components/movies-list/movies-list.co
 })
 export class HomeComponent {
   movieService = inject(MovieService);
-
-  upComingMovies = this.movieService.upComingMovies;
-  topRatedMovies = this.movieService.topRatedMovies;
-  popularMovies = this.movieService.popularMovies;
+  upComingMovies = toSignal<Movie[]>(this.movieService.upcomingMovies$);
+  topRatedMovies = toSignal<Movie[]>(this.movieService.topRatedMovies$);
+  popularMovies = toSignal<Movie[]>(this.movieService.popularMovies$);
 }

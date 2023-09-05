@@ -1,17 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, effect, inject, signal } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import {
   catchError,
+  distinctUntilChanged,
   map,
-  mergeMap,
   shareReplay,
   switchMap,
-  toArray,
 } from 'rxjs/operators';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Genre } from 'src/app/shared/models/genre';
 import { Movie } from 'src/app/shared/models/movie';
-import { combineLatest, from, of } from 'rxjs';
+import { combineLatest, forkJoin, of } from 'rxjs';
 import { MovieInformation } from 'src/app/shared/models/movie-information';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthService } from './auth.service';
@@ -28,7 +27,7 @@ export class MovieService {
   #apiUrl = 'https://api.themoviedb.org/3/';
   #apiKey = '0f60ad592a39d4b497a0d8889bba1be2';
 
-  #movieGenres$ = this.#http
+  movieGenres$ = this.#http
     .get<any>(
       `${this.#apiUrl}genre/movie/list?api_key=${this.#apiKey}&language=en-US`
     )
@@ -41,7 +40,7 @@ export class MovieService {
       })
     );
 
-  #upcomingMovies$ = this.#http
+  upcomingMovies$ = this.#http
     .get<any>(`${this.#apiUrl}movie/upcoming?api_key=${this.#apiKey}`)
     .pipe(
       map((data) => data.results.slice(0, 5)),
@@ -52,7 +51,7 @@ export class MovieService {
       })
     );
 
-  #popularMovies$ = this.#http
+  popularMovies$ = this.#http
     .get<any>(
       `${this.#apiUrl}movie/popular?api_key=${
         this.#apiKey
@@ -67,7 +66,7 @@ export class MovieService {
       })
     );
 
-  #topRatedMovies$ = this.#http
+  topRatedMovies$ = this.#http
     .get<any>(
       `${this.#apiUrl}movie/top_rated?api_key=${
         this.#apiKey
@@ -82,7 +81,7 @@ export class MovieService {
       })
     );
 
-  #movieListByGenre$ = toObservable(this.selectedGenreId).pipe(
+  movieListByGenre$ = toObservable(this.selectedGenreId).pipe(
     switchMap((genreId) => {
       const url = `${this.#apiUrl}discover/movie?api_key=${
         this.#apiKey
@@ -98,13 +97,13 @@ export class MovieService {
     })
   );
 
-  #movieDetail$ = toObservable(this.#movieId).pipe(
+  movieDetail$ = toObservable(this.#movieId).pipe(
     switchMap((movieId) => {
       if (movieId) {
         const url = `${this.#apiUrl}movie/${movieId}?api_key=${
           this.#apiKey
         }&language=en-US`;
-        return this.#http.get<any>(url).pipe(
+        return this.#http.get<Movie>(url).pipe(
           shareReplay(1),
           catchError((error: any) => {
             console.error('API Error', error);
@@ -116,7 +115,7 @@ export class MovieService {
     })
   );
 
-  #movieCredits$ = toObservable(this.#movieId).pipe(
+  movieCredits$ = toObservable(this.#movieId).pipe(
     switchMap((movieId) => {
       if (movieId) {
         const url = `${this.#apiUrl}movie/${movieId}/credits?api_key=${
@@ -134,13 +133,13 @@ export class MovieService {
     })
   );
 
-  #movieInfo$ = combineLatest([this.#movieDetail$, this.#movieCredits$]).pipe(
+  movieInfo$ = combineLatest([this.movieDetail$, this.movieCredits$]).pipe(
     map(([movieDetail, movieCredits]) => {
       return { detail: movieDetail, credits: movieCredits } as MovieInformation;
     })
   );
 
-  #userFavoriteMovies$ = toObservable(this.#auth.user).pipe(
+  userFavoriteMovies$ = toObservable(this.#auth.user).pipe(
     switchMap((user) => {
       if (user.uid) {
         return this.#db
@@ -153,23 +152,51 @@ export class MovieService {
               });
             }),
             switchMap((favoriteMovieIds) => {
-              return from(favoriteMovieIds).pipe(
-                mergeMap((movieId) => {
-                  return this.#http.get<Movie[]>(
-                    `${this.#apiUrl}movie/${movieId}?api_key=${
-                      this.#apiKey
-                    }&language=en-US`
-                  );
-                }),
-                toArray()
+              const movieRequests = favoriteMovieIds.map((movieId) =>
+                this.#http.get<Movie>(
+                  `${this.#apiUrl}movie/${movieId}?api_key=${
+                    this.#apiKey
+                  }&language=en-US`
+                )
               );
+              return forkJoin(movieRequests);
             })
           );
       } else {
-        return of([]);
+        return of([] as Movie[]);
       }
     })
   );
+
+  movieDocumentId$ = combineLatest([
+    toObservable(this.#movieId),
+    toObservable(this.#auth.user),
+  ]).pipe(
+    shareReplay(1),
+    switchMap(([movieId, user]) => {
+      if (user.uid && movieId) {
+        return this.#db
+          .collection('favorites', (ref) =>
+            ref.where('userId', '==', user.uid).where('movieId', '==', movieId)
+          )
+          .valueChanges();
+      }
+      return of('');
+    })
+  );
+
+  toggleMovieFavorite() {
+    const documentId = `${this.#movieId()}_${this.#auth.user().uid}`;
+    const favoriteRef = this.#db.collection('favorites').doc(documentId);
+    if (this.movieDocumentId().length > 0) {
+      favoriteRef.delete();
+    } else {
+      favoriteRef.set({
+        movieId: this.#movieId(),
+        userId: this.#auth.user().uid,
+      });
+    }
+  }
 
   setSelectedGenreId(genreId: Genre) {
     this.selectedGenreId.set(genreId);
@@ -179,11 +206,5 @@ export class MovieService {
     this.#movieId.set(movieId);
   }
 
-  movieGenres = toSignal<Genre[]>(this.#movieGenres$);
-  upComingMovies = toSignal<Movie>(this.#upcomingMovies$);
-  popularMovies = toSignal<Movie[]>(this.#popularMovies$);
-  topRatedMovies = toSignal<Movie[]>(this.#topRatedMovies$);
-  movieListByGenre = toSignal<Movie[]>(this.#movieListByGenre$);
-  movieInfo = toSignal<any>(this.#movieInfo$);
-  userFavoriteMovies = toSignal<Movie[]>(this.#userFavoriteMovies$);
+  movieDocumentId = toSignal<string>(this.movieDocumentId$);
 }
