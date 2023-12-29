@@ -8,6 +8,7 @@ import { DisplayImagePipe } from 'src/app/shared/pipes/display-image.pipe';
 import { MatIconModule } from '@angular/material/icon';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Movie } from 'src/app/shared/models/movie';
+import { FavoritesService } from 'src/app/core/services/favorites.service';
 
 @Component({
   selector: 'moma-movie-detail',
@@ -28,10 +29,11 @@ import { Movie } from 'src/app/shared/models/movie';
 export class MovieDetailComponent implements OnInit {
   #location = inject(Location);
   #movieService = inject(MovieService);
+  #favoritesService = inject(FavoritesService);
   @Input() id = '';
   movieInfo = toSignal<any>(this.#movieService.movieInfo$);
   userFavoriteMovies = toSignal<Movie[]>(
-    this.#movieService.userFavoriteMovies$
+    this.#favoritesService.userFavoriteMovies$
   );
   isMovieFavorite = computed(() => {
     return this.userFavoriteMovies()?.filter(

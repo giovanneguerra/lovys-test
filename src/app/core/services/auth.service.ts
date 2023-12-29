@@ -1,4 +1,4 @@
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,6 +14,11 @@ export class AuthService {
   #router = inject(Router);
   #formBuilder = inject(FormBuilder);
   loading = signal(false);
+  userId = localStorage.getItem('uid');
+  #user = toSignal(this.#auth.authState);
+  user = computed(
+    () => ({ email: this.#user()?.email, uid: this.#user()?.uid } as User)
+  );
 
   initForm(): FormGroup {
     return this.#formBuilder.group({
@@ -37,8 +42,9 @@ export class AuthService {
 
   #processAuthAction(authAction: () => Promise<any>) {
     authAction()
-      .then(() => {
-        this.#onAuthenticationSuccess();
+      .then((userCredential) => {
+        const uid = userCredential.user.uid;
+        this.#onAuthenticationSuccess(uid);
       })
       .catch((error) => {
         console.error('Register error:', error);
@@ -57,8 +63,9 @@ export class AuthService {
     this.#processAuthAction(authMethod);
   }
 
-  #onAuthenticationSuccess() {
+  #onAuthenticationSuccess(uid: string) {
     localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('uid', uid);
     this.#router.navigate(['/']);
     this.loading.set(false);
   }
@@ -66,12 +73,8 @@ export class AuthService {
   logout() {
     this.#auth.signOut().then(() => {
       localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('uid');
       this.#router.navigate(['/login']);
     });
   }
-
-  #user = toSignal(this.#auth.authState);
-  user = computed(
-    () => ({ email: this.#user()?.email, uid: this.#user()?.uid } as User)
-  );
 }

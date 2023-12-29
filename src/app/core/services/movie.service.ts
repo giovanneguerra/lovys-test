@@ -139,35 +139,6 @@ export class MovieService {
     })
   );
 
-  userFavoriteMovies$ = toObservable(this.#auth.user).pipe(
-    switchMap((user) => {
-      if (user.uid) {
-        return this.#db
-          .collection('favorites', (ref) => ref.where('userId', '==', user.uid))
-          .snapshotChanges()
-          .pipe(
-            map((snaps) => {
-              return snaps.map((snap) => {
-                return snap.payload.doc.get('movieId');
-              });
-            }),
-            switchMap((favoriteMovieIds) => {
-              const movieRequests = favoriteMovieIds.map((movieId) =>
-                this.#http.get<Movie>(
-                  `${this.#apiUrl}movie/${movieId}?api_key=${
-                    this.#apiKey
-                  }&language=en-US`
-                )
-              );
-              return forkJoin(movieRequests);
-            })
-          );
-      } else {
-        return of([] as Movie[]);
-      }
-    })
-  );
-
   movieDocumentId$ = combineLatest([
     toObservable(this.#movieId),
     toObservable(this.#auth.user),
