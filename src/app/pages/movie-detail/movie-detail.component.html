@@ -1,21 +1,23 @@
-<div class="movieDetail" *ngIf="movieInfo() as movieInfo; else loading">
-  <img
-    *ngIf="movieInfo.detail.poster_path"
-    [src]="movieInfo.detail.poster_path | displayImage"
-    [alt]="movieInfo.detail.title"
-    class="movieDetail__image"
-  />
-  <div class="movieDetail__content">
-    <h1>{{ movieInfo.detail?.title }}</h1>
-    <p>{{ movieInfo.detail?.overview }}</p>
-    <mat-icon (click)="toggleFavorite()">{{
-      displayFavoriteMovie(isMovieFavorite().length > 0)
-    }}</mat-icon>
-    <moma-movie-genres [genres]="movieInfo.detail.genres"></moma-movie-genres>
-    <moma-movie-credits [credits]="movieInfo.credits"></moma-movie-credits>
-    <a class="page-link" (click)="goBack()">Go back to the list</a>
+<div class="container">
+  <div class="movieDetail" *ngIf="movieInfo() as movieInfo; else loading">
+    <img
+      *ngIf="movieInfo.detail.poster_path"
+      [src]="movieInfo.detail.poster_path | displayImage"
+      [alt]="movieInfo.detail.title"
+      class="movieDetail__image"
+    />
+    <div class="movieDetail__content">
+      <h1>{{ movieInfo.detail?.title }}</h1>
+      <p>{{ movieInfo.detail?.overview }}</p>
+      <mat-icon (click)="toggleFavorite()">{{
+        displayFavoriteMovie(isMovieFavorite().length > 0)
+      }}</mat-icon>
+      <moma-movie-genres [genres]="movieInfo.detail.genres"></moma-movie-genres>
+      <moma-movie-credits [credits]="movieInfo.credits"></moma-movie-credits>
+      <a class="page-link" (click)="goBack()">Go back to the list</a>
+    </div>
   </div>
+  <ng-template #loading>
+    <mat-spinner class="loader"></mat-spinner>
+  </ng-template>
 </div>
-<ng-template #loading>
-  <mat-spinner class="loader"></mat-spinner>
-</ng-template>

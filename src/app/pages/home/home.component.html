@@ -1,47 +1,51 @@
-<div class="intro">
-  <h1>
-    Welcome to Movie Mash: Your Ultimate Destination for Cinematic Exploration!
-  </h1>
-  <p>
-    Embark on an unforgettable journey through the world of entertainment with
-    Movie Mash – the ultimate tool for all your movie and TV show cravings.
-    Whether you're a die-hard fan of heart-pounding action, a connoisseur of
-    spine-tingling suspense, or someone who simply loves to get lost in
-    heartwarming dramas, Movie Mash is here to revolutionize your viewing
-    experience.
-  </p>
-  <p>
-    Imagine a world where you can effortlessly explore an extensive database of
-    movies and TV shows, all sorted neatly by genre. From the adrenaline-pumping
-    excitement of action to the laughter-inducing charm of comedy, and from the
-    enigmatic allure of mystery to the captivating narratives of drama – Movie
-    Mash has it all at your fingertips. Dive into richly detailed descriptions,
-    cast and crew information, reviews, and so much more. Our intuitive Single
-    Page Application (SPA) design ensures that you can seamlessly navigate
-    through this treasure trove of cinematic wonders, making your quest for the
-    perfect viewing choice an absolute delight.
-  </p>
-  <p>
-    Movie Mash isn't just a platform; it's your personal guide to the world of
-    on-screen magic. Whether you're planning a movie night with friends,
-    searching for your next binge-worthy TV show, or simply exploring the vast
-    landscape of audio-visual storytelling, Movie Mash is your trusted
-    companion. So, get ready to uncover hidden gems, rediscover old favorites,
-    and make your entertainment moments truly extraordinary with Movie Mash!
-  </p>
+<div class="container">
+  <div class="intro">
+    <h1>
+      Welcome to Movie Mash: Your Ultimate Destination for Cinematic
+      Exploration!
+    </h1>
+    <p>
+      Embark on an unforgettable journey through the world of entertainment with
+      Movie Mash – the ultimate tool for all your movie and TV show cravings.
+      Whether you're a die-hard fan of heart-pounding action, a connoisseur of
+      spine-tingling suspense, or someone who simply loves to get lost in
+      heartwarming dramas, Movie Mash is here to revolutionize your viewing
+      experience.
+    </p>
+    <p>
+      Imagine a world where you can effortlessly explore an extensive database
+      of movies and TV shows, all sorted neatly by genre. From the
+      adrenaline-pumping excitement of action to the laughter-inducing charm of
+      comedy, and from the enigmatic allure of mystery to the captivating
+      narratives of drama – Movie Mash has it all at your fingertips. Dive into
+      richly detailed descriptions, cast and crew information, reviews, and so
+      much more. Our intuitive Single Page Application (SPA) design ensures that
+      you can seamlessly navigate through this treasure trove of cinematic
+      wonders, making your quest for the perfect viewing choice an absolute
+      delight.
+    </p>
+    <p>
+      Movie Mash isn't just a platform; it's your personal guide to the world of
+      on-screen magic. Whether you're planning a movie night with friends,
+      searching for your next binge-worthy TV show, or simply exploring the vast
+      landscape of audio-visual storytelling, Movie Mash is your trusted
+      companion. So, get ready to uncover hidden gems, rediscover old favorites,
+      and make your entertainment moments truly extraordinary with Movie Mash!
+    </p>
+  </div>
+  <moma-movies-list
+    title="Upcoming Movies"
+    [moviesList]="upComingMovies"
+  ></moma-movies-list>
+  <hr />
+  <moma-movies-list
+    title="Top Movies"
+    [moviesList]="topRatedMovies"
+    altBackground="true"
+  ></moma-movies-list>
+  <hr />
+  <moma-movies-list
+    title="Popular Movies"
+    [moviesList]="popularMovies"
+  ></moma-movies-list>
 </div>
-<moma-movies-list
-  title="Upcoming Movies"
-  [moviesList]="upComingMovies"
-></moma-movies-list>
-<hr />
-<moma-movies-list
-  title="Top Movies"
-  [moviesList]="topRatedMovies"
-  altBackground="true"
-></moma-movies-list>
-<hr />
-<moma-movies-list
-  title="Popular Movies"
-  [moviesList]="popularMovies"
-></moma-movies-list>
