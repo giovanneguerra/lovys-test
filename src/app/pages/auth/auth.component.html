@@ -17,6 +17,7 @@
             placeholder="Email"
             type="email"
             formControlName="email"
+            class="email"
             required
           />
         </mat-form-field>
@@ -26,6 +27,7 @@
             placeholder="Password"
             type="password"
             formControlName="password"
+            class="password"
             required
           />
         </mat-form-field>
@@ -34,13 +36,14 @@
           color="primary"
           [disabled]="isLoading()"
           type="submit"
+          class="submitButton"
         >
-          Sign {{ isSignup ? "Up" : "In" }}
+          Sign {{ isSignup | isLoginOrSignUp }}
         </button>
       </form>
     </mat-card-content>
-    <a [routerLink]="isSignup ? '/login' : '/sign-up'" class="auth-link">{{
-      isSignup ? "Back to login" : "Sign up"
-    }}</a>
+    <a [routerLink]="isSignup | isLoginOrSignUp : 'true'" class="authLink"
+      >Go to Sign {{ !isSignup | isLoginOrSignUp }}</a
+    >
   </mat-card>
 </div>
